@@ -1,0 +1,167 @@
+SELECT continent.name, country.name, city.name, spot.name, spot.id FROM spot
+JOIN district USING (district_id)
+JOIN city USING (city_id)
+JOIN province USING (province_id)
+JOIN country USING (country_id)
+JOIN continent USING (continent_id)
+WHERE spot.english_name IS NOT NULL
+ORDER BY continent_id, country_id, province_id, district_id, city_id, spot_id
+
+/**/
+
+UPDATE order_master AS `OrderMaster` LEFT JOIN `gigade`.`order_slave` AS `OrderSlave` ON (`OrderMaster`.`order_id` = `OrderSlave`.`order_id`) LEFT JOIN `gigade`.`order_detail` AS `OrderDetail` ON (`OrderSlave`.`slave_id` = `OrderDetail`.`slave_id`) LEFT JOIN `gigade`.`product_item` AS `ProductItem` ON (`ProductItem`.`item_id` = `OrderDetail`.`item_id`) LEFT JOIN `gigade`.`product` AS `Product` ON (`Product`.`product_id` = `ProductItem`.`product_id`)
+SET `OrderDetail`.`product_mode` = 3
+WHERE `OrderMaster`.`order_createdate` < 1370188800 AND `OrderSlave`.`slave_status` = 99 AND `OrderSlave`.`slave_date_close` < 1372608000 AND `OrderSlave`.`account_status` = '0' AND `OrderDetail`.`product_mode` = 1 AND `Product`.`product_mode` = 3
+
+SELECT DATE(FROM_UNIXTIME(order_createdate)) AS date, SUM(order_amount) AS amount FROM order_master
+WHERE order_createdate > UNIX_TIMESTAMP('2013-05-01')
+AND order_status IN (0, 2, 3, 4, 99)
+AND DAYOFWEEK(FROM_UNIXTIME(order_createdate)) = 7
+GROUP BY DATE(FROM_UNIXTIME(order_createdate))
+
+SELECT SUM(sales_amount) FROM invoice_master_record
+WHERE invoice_date >= UNIX_TIMESTAMP('2013-05-01')
+AND invoice_attribute != 2
+AND tax_type = 3
+
+SELECT SUM(single_money * buy_num) FROM `invoice_master_record`
+JOIN invoice_slive_info USING (invoice_id)
+JOIN product_item USING (item_id)
+JOIN product USING (product_id)
+WHERE `invoice_date` >= UNIX_TIMESTAMP('2013-05-01')
+AND invoice_attribute != 2
+AND print_post_createdate > 0
+AND product.tax_type = 3
+
+UPDATE order_master SET invoice_status = 0 WHERE order_id IN
+(SELECT order_id FROM invoice_master_record
+WHERE invoice_date >= UNIX_TIMESTAMP('2013-05-01')
+AND invoice_status = 2
+AND invoice_attribute != 2
+AND print_post_createdate = 0)
+
+UPDATE order_master
+JOIN order_slave USING (order_id)
+JOIN order_detail USING (slave_id)
+SET order_detail.detail_status = 4
+WHERE order_status IN (4, 99)
+AND order_detail.detail_status = 6
+
+SELECT SUM(deduct_happygo)
+FROM hg_deduct
+JOIN order_master USING (order_id)
+WHERE created >= '2013-05-01'
+AND created < '2013-06-01'
+AND code = '5000'
+
+SELECT SUM(deduct_happygo)
+FROM hg_deduct_reverse
+JOIN order_master USING (order_id)
+WHERE created >= '2013-05-01'
+AND created < '2013-06-01'
+AND code = '5000'
+
+UPDATE `product`
+SET product_image = REPLACE(product_image, '..jpg', '.jpg')
+WHERE product_image REGEXP '\\.\\.jpg$'
+
+SELECT user_id, order_id, FROM_UNIXTIME(order_createdate)
+FROM hashmaps
+JOIN order_master ON (hashmaps.key = order_master.user_id)
+WHERE event = 3
+AND order_createdate >= UNIX_TIMESTAMP(created)
+
+SELECT
+order_slave.slave_id, slave_status,
+order_slave.vendor_id, vendor.vendor_name_simple,
+detail_id, detail_status, FROM_UNIXTIME(order_date_pay)
+FROM order_detail
+JOIN order_slave USING (slave_id)
+JOIN order_master USING (order_id)
+JOIN vendor USING (vendor_id)
+WHERE `detail_status` = 6
+ORDER by order_date_pay
+
+SELECT order_master.order_id, cancel_id FROM order_master
+LEFT JOIN order_cancel_master USING (order_id)
+WHERE order_date_pay > UNIX_TIMESTAMP('2012-12-11')
+AND cancel_id IS NOT NULL
+
+SELECT order_master.order_id, slave_id, deliver_id FROM order_master
+LEFT JOIN order_slave USING (order_id)
+LEFT JOIN order_deliver USING (slave_id)
+WHERE order_date_pay > UNIX_TIMESTAMP('2012-12-11')
+AND slave_date_delivery > 0
+AND deliver_id IS NULL
+
+SELECT order_master.order_id,
+slave_id, FROM_UNIXTIME(slave_date_delivery),
+deliver_id, FROM_UNIXTIME(deliver_time)
+FROM order_master
+LEFT JOIN order_slave USING (order_id)
+LEFT JOIN order_deliver USING (slave_id)
+WHERE order_date_pay > UNIX_TIMESTAMP('2012-12-11')
+AND slave_date_delivery != deliver_time
+
+SELECT order_master.order_id, slave_id, slave_status FROM order_master
+LEFT JOIN order_slave USING (order_id)
+WHERE order_date_pay > UNIX_TIMESTAMP('2012-12-11')
+AND order_status = 4
+AND slave_status NOT IN (4, 90, 99)
+
+SELECT DISTINCT order_master.order_id
+FROM deliver_master
+LEFT JOIN order_master USING (order_id)
+WHERE delivery_status = 3
+AND order_status NOT IN (4, 99)
+
+SELECT DISTINCT order_master.order_id, DATE(FROM_UNIXTIME(order_date_pay))
+FROM product_category
+LEFT JOIN product_category_set USING (category_id)
+LEFT JOIN product_item USING (product_id)
+LEFT JOIN order_detail USING (item_id)
+LEFT JOIN order_slave USING(slave_id)
+LEFT JOIN order_master USING (order_id)
+WHERE category_id = 80 AND order_date_pay > UNIX_TIMESTAMP('2012-12-17')
+//order_id > 123510000
+
+SELECT order_master.user_id, order_master.order_id, group_id
+FROM order_master
+JOIN order_slave USING (order_id)
+JOIN order_detail USING (slave_id)
+LEFT JOIN vip_user ON vip_user.user_id = order_master.user_id AND group_id IN (2, 7, 8)
+WHERE item_id = 109329
+AND order_id > 123620000
+AND order_status IN (0, 2, 3, 4, 99)
+AND group_id IS NULL
+
+UPDATE deliver_detail SET delivery_status = 3
+WHERE detail_id IN
+(
+SELECT * FROM
+(
+SELECT detail_id FROM deliver_master
+JOIN deliver_detail USING (deliver_id)
+WHERE type = 3
+AND deliver_master.delivery_status = 2
+AND deliver_detail.delivery_status = 2
+) T
+)
+
+UPDATE deliver_master SET delivery_status = 3
+WHERE type = 3 AND delivery_status = 2
+
+SELECT DISTINCT A.user_id FROM order_master A
+LEFT JOIN order_master B ON
+(
+A.user_id = B.user_id AND
+B.order_createdate > UNIX_TIMESTAMP('2013-03-01') AND
+B.order_date_pay > 0
+)
+WHERE
+A.order_createdate > UNIX_TIMESTAMP('2012-11-01') AND
+A.order_createdate < UNIX_TIMESTAMP('2013-03-01') AND
+A.order_date_pay > 0 AND
+A.order_status = 99 AND B.order_id IS NULL
+
+\bye

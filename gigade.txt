@@ -1,0 +1,273 @@
+Language -> English
+Install Ubuntu Server
+Select a language -> English
+Select your location -> other -> Asia -> Taiwan
+Configure locales -> United States -> en_US.UTF-8
+Configure the keyboard
+  Detect keyboard layout? -> No
+  Country of origin for the keyboard: -> English (US)
+  Keyboard layout: -> English (US)
+Configure the network
+  Hostname: ->
+Set up users and passwords
+  Full name for the new user: ->
+  Username for your account: ->
+  Choose a password for the new user: ->
+  Re-enter password to verify: ->
+  Encrypt your home directory? -> No
+Configure the clock
+  Is this time zone correct? -> Yes
+Partition disks
+  Partitioning method: -> Manual
+
+  Create a new partition -> 512 MB -> Logical -> Beginning -> Use as: swap area
+  Create a new partition -> 10 GB -> Logical -> Beginning -> Mount point: /
+  Create a new partition -> ? GB -> Logical -> Beginning -> Mount point: / -> Reserved blocks: 0%
+  Finish partitioning and write changes to disk
+  Write the changes to disks? -> Yes
+
+Install the base system...
+
+Configure the package manager
+  HTTP proxy information (blank for none): -> Continue
+
+Configureing apt...
+Select and install software...
+
+Configureing tasksel
+  No automatic updates
+
+Softwate selection -> Continue
+
+Select and install software...
+
+Install the GRUB boot loader on a head disk -> Yes
+Finish the installation -> Continue
+
+set the password of root after login
+sudo passwd
+
+/etc/network/interfaces
+iface eth0 inet static
+address 192.168.1.x
+netmask 255.255.255.0
+gateway 192.168.1.1
+
+dns-nameservers 127.0.1.1
+dns-search gimg.tw
+
+sudo /etc/init.d/networking restart
+
+sudo apt-get install openssh-server
+
+#/etc/ssh/sshd_config
+#PasswordAuthentication no
+
+sudo apt-get install ntp
+
+sudo apt-get install php5 phpmyadmin mysql-server
+
+sudo a2dismod autoindex
+sudo a2enmod rewrite
+sudo a2enmod ssl
+sudo a2enmod proxy_http
+echo ServerName `hostname` | sudo tee /etc/apache2/conf.d/ServerName
+
+sudo apt-get install build-essential libmysqlclient-dev
+
+wget http://mydns.bboy.net/download/mydns-1.1.0.tar.gz
+tar xvfz mydns-1.1.0.tar.gz
+cd mydns-1.1.0
+./configure \
+  --with-mysql-lib=/usr/lib/i386-linux-gnu \
+  --with-zlib=/usr/lib/i386-linux-gnu
+make
+sudo make install
+sudo mkdir /var/www/mydns
+sudo cp contrib/admin.php /var/www/mydns/
+sudo sed -i '2484,2485s/\$this/$_this/' /var/www/mydns/admin.php
+
+/etc/init/mydns.conf
+
+mydns --dump-config | sudo tee /etc/mydns.conf
+db-password=
+group = nogroup
+recursive = 8.8.4.4
+
+sudo chmod o-r /etc/mydns.conf
+
+#telnet 192.168.1.1
+#sys domainname ?
+#sys domainname wan1 gimg.tw
+
+sudo apt-get install git-core
+
+u mkdir -p /home/ubuntu/git/gigade
+cd /home/ubuntu/git/gigade
+u git --bare init
+
+/* client side */
+git init
+git remote add origin https://git.gimg.tw:5000/gigade
+git config branch.master.remote origin
+git config branch.master.merge refs/heads/master
+#git config branch.develop.remote origin
+#git config branch.develop.merge refs/heads/develop
+git push origin master
+
+apt-get install p7zip-full
+
+/etc/php5/apache2/php.ini
+
+upload_max_filesize = 10M
+max_file_uploads = 100
+
+alias u='sudo -u ubuntu'
+
+cd /home/ubuntu
+u 7z x pathto/mantisbt1.2.11.zip
+u ln -s mantisbt-1.2.11/ mantis
+
+/etc/apache2/sites-enabled/mantis:
+<VirtualHost *:80>
+  ServerName mantis.gimg.tw
+  ServerAlias mantis
+  ServerAdmin it@gigade.com.tw
+  ErrorLog /var/log/apache2/mantis-error_log
+  CustomLog /var/log/apache2/mantis-access_log common
+
+  DocumentRoot "/home/ubuntu/mantis"
+
+  <Directory "/home/ubuntu/mantis">
+    Options FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>
+
+#apt-get install sendmail
+
+u chmod o+w /home/ubuntu/mantis
+
+sudo /etc/init.d/apache2 reload
+http://mantis.gimg.tw/
+Setting Admin Username blank
+Setting Admin Password blank
+
+u chmod o-w /home/ubuntu/mantis
+u chmod o-r /home/ubuntu/mantis/config_inc.php
+u chgrp www-data /home/ubuntu/mantis/config_inc.php
+u rm -rf /home/ubuntu/mantis/admin
+
+u mkdir /home/ubuntu/mantis/upload
+u chgrp www-data /home/ubuntu/mantis/upload
+u chmod g+w /home/ubuntu/mantis/upload
+
+login as administrator/root
+
+/home/ubuntu/mantis/config_inc.php:
+  $g_login_method = LDAP;
+  $g_ldap_server = 'ldap://ldap.gimg.tw';
+  $g_ldap_port = '389';
+  $g_ldap_root_dn = 'ou=People, dc=gigade, dc=com, dc=tw';
+  $g_ldap_organization = '';
+  $g_ldap_uid_field = 'uid';
+  $g_ldap_protocol_version = '3';
+  $g_use_ldap_email = ON;
+
+cd /home/ubuntu
+u tar xvfz pathto/mediawiki-1.19.2.tar.gz
+u ln -s mediawiki-1.19.2/ mediawiki
+
+/etc/apache2/sites-enabled/mediawiki:
+<VirtualHost *:80>
+  ServerName mediawiki.gimg.tw
+  ServerAlias mediawiki
+  ServerAdmin it@gigade.com.tw
+  ErrorLog /var/log/apache2/mediawiki-error_log
+  CustomLog /var/log/apache2/mediawiki-access_log common
+
+  DocumentRoot "/home/ubuntu/mediawiki"
+
+  <Directory "/home/ubuntu/mediawiki">
+    Options FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>
+
+sudo /etc/init.d/apche reload
+http://mediawiki.gimg.tw/
+
+cp pathto/LocalSettings.php /home/ubuntu/mediawiki/
+u chgrp www-data /home/ubuntu/mediawiki/LocalSettings.php
+u chmod o-r /home/ubuntu/mediawiki/LocalSettings.php
+u chgrp www-data /home/ubuntu/mediawiki/images
+u chmod g+w /home/ubuntu/mediawiki/images
+
+http://www.mediawiki.org/wiki/Extension:LDAP_Authentication
+
+cd /home/ubuntu/mediawiki/extensions/
+u tar xvfz pathto/LdapAuthentication-MW1.19-108775.tar.gz
+
+sudo apt-get install slapd ldap-utils phpldapadmin
+
+/etc/phpldapadmin/config.php
+  $servers->setValue('server','base',array('dc=gigade,dc=com,dc=tw'));
+  $servers->setValue('login','bind_id','cn=admin,dc=gigade,dc=com,dc=tw');
+  $servers->setValue('auto_number','min',array('uidNumber'=>10000,'gidNumber'=>1000));
+
+dpkg-reconfigure slapd
+
+sudo apt-get install python-pip python-pastescript python-dev python-mysqldb
+sudo easy_install rhodecode==1.4.2
+sudo easy_install mercurial==2.3.0
+#sudo easy_install mock
+#simplejson==2.5.2 docutils==0.8.1 markdown==2.1.1 dulwich...
+sudo apt-get install python-ldap
+
+u mkdir /home/ubuntu/rhodecode
+cd /home/ubuntu/rhodecode
+sudo
+u
+u chown ubuntu:ubuntu /home/ubuntu/rhodecode/production.ini
+u chmod o-r /home/ubuntu/rhodecode/production.ini
+
+u paster serve /home/ubuntu/rhodecode/production.ini
+
+sudo apt-get install php-pear php-benchmark php5-curl php-apc php5-imagick imagemagick php-mail php-mail-mime
+sudo pear install Pager
+
+/**/
+
+cd "C:\Program Files (x86)\Git\git-cheetah"
+regsvr32 /u git_shell_ext64.dll
+
+cd "C:\Program Files\Git\git-cheetah"
+regsvr32 /u git_shell_ext.dll
+
+sudo apt-get install ldap-account-manager
+
+/**/
+
+sudo mount -t cifs -o username=owner,password=884495,uid=www-data,gid=www-data,dir_mode=0775,file_mode=0664 //192.168.1.253/gigade100 /home/ahon/gigade/
+sudo mount --bind /home/hata/gigade/img.gigade100.com/ /home/ahon/gigade/img.gigade100.com/
+
+/**/
+
+http_port 80 accel vhost
+acl gimg_tw dstdomain .gimg.tw
+http_access allow gimg_tw
+cache_peer 60.249.127.61 parent 80 0 no-query originserver name=a.gimg.tw
+
+/**/
+
+adduser
+
+export ACCOUNT=???
+sudo useradd $ACCOUNT -g users -G sudo,www-data,adm -N -s /bin/bash -m \
+  -p '$1$MtvPcgZo$DBii8LJynfE8xq2lvU4KS0'
+
+\bye

@@ -1,0 +1,214 @@
+/* Create a linux account */
+
+#export ACCOUNT=???
+#sudo useradd $ACCOUNT -g users -G adm,sudo -N -s /bin/bash -m \
+#    -p '$1$MtvPcgZo$DBii8LJynfE8xq2lvU4KS0'
+#
+#sudo mkdir /home/$ACCOUNT/.ssh
+#sudo vim /home/$ACCOUNT/.ssh/authorized_keys
+#sudo chown $ACCOUNT:users /home/$ACCOUNT/.ssh -R
+#sudo chmod 700 /home/$ACCOUNT/.ssh
+
+wget http://dev2.invisibi.com/account/account.sh
+sudo bash account.sh $ACCOUNT
+
+ssh-keygen -t rsa
+https://github.com/settings/ssh
+
+git config --global user.name ?
+git config --global user.email ?
+
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
+git config --global color.log auto
+
+git clone git@github.com:Invisibi/prototype.git
+
+//GIT_SSL_NO_VERIFY=1
+
+/* Oracle Java 7 */
+
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
+
+/* Cassandra */
+
+echo 'deb http://debian.datastax.com/community stable main' | \
+    sudo tee /etc/apt/sources.list.d/cassandra.sources.list
+curl -L http://debian.datastax.com/debian/repo_key | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install dsc20
+
+sudo mkdir /var/run/cassandra
+sudo chown cassandra:cassandra /var/run/cassandra
+
+/* MongoDB */
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | \
+    sudo tee /etc/apt/sources.list.d/mongodb.list
+sudo apt-get update
+sudo apt-get install mongodb-10gen=2.4.8
+
+sudo apt-get install php-pear
+sudo pecl install mongo
+echo "extension=mongo.so" | sudo tee /etc/php5/conf.d/mongo.ini
+
+tar cfvz mongo.tgz /usr/lib/php5/20090626/mongo.so \
+  /etc/php5/conf.d/mongo.ini
+
+sudo -u mongodb mongod --repair --dbpath /var/lib/mongodb/
+
+/* OpenFire */
+
+wget http://www.igniterealtime.org/downloadServlet?filename=openfire/openfire_3.8.2_all.deb \
+    -O openfire_3.8.2_all.deb
+sudo dpkg -i openfire_3.8.2_all.deb
+
+cd /usr/lib/jvm
+sudo ln -s java-7-oracle default-java
+
+/* node-xmmp */
+
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install nodejs
+
+npm install node-xmpp
+
+/* maven */
+
+mvn archetype:generate
+  -DgroupId=com.invisibi.im \
+  -DartifactId=socketio-im \
+  -DarchetypeArtifactId=maven-archetype-quickstart
+
+/* ip forward */
+
+/etc/sysctl.conf
+
+net.ipv4.ip_forward=1
+
+sysctl -p
+
+/* Jenkins */
+
+wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
+sudo apt-get update
+sudo apt-get install jenkins
+
+/* Redis */
+
+sudo add-apt-repository ppa:chris-lea/redis-server
+echo "deb http://ppa.launchpad.net/chris-lea/redis-server/ubuntu precise main
+deb-src http://ppa.launchpad.net/chris-lea/redis-server/ubuntu precise main" | sudo tee /etc/apt/sources.list.d/chris-lea-redis-server-precise.list
+sudo apt-get update
+sudo apt-get install redis-server
+
+/* uuid */
+
+sudo apt-get install uuid uuid-dev
+sudo pecl install uuid
+
+echo "extension=uuid.so" | sudo tee /etc/php5/conf.d/uuid.ini
+
+tar cfvz uuid.tgz /usr/lib/php5/20090626/uuid.so \
+  /etc/php5/conf.d/uuid.ini
+
+/* m3u8-segmenter */
+
+#sudo apt-add-repository ppa:johnf-inodes/m3u8-segmenter
+#sudo apt-get update
+#sudo apt-get install m3u8-segmenter
+
+/* mantis */
+
+<VirtualHost *:80>
+  ServerName mantis.invisibi.com
+  ServerAlias mantis
+  RewriteEngine on
+  RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R,L]
+</VirtualHost>
+<VirtualHost *:443>
+  ServerName mantis.invisibi.com
+  ServerAlias mantis
+  ServerAdmin it@invisibi.com
+  ErrorLog /var/log/apache2/mantis-error_log
+  CustomLog /var/log/apache2/mantis-access_log common
+
+  DocumentRoot "/home/ubuntu/mantis"
+
+  <Directory "/home/ubuntu/mantis">
+    Options FollowSymLinks
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  SSLEngine on
+  SSLCipherSuite ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP:+eNULL
+  SSLCertificateFile /etc/ssl/public/wildcard.invisibi.com.crt
+  SSLCertificateKeyFile /etc/ssl/private/wildcard.invisibi.com.key
+
+</VirtualHost>
+
+/* ldap */
+
+sudo wget http://dev2.invisibi.com/account/cacert.pem -O /etc/ssl/certs/cacert.pem
+
+sudo apt-get install libnss-ldap
+
+LDAP server Uniform Resource Identifier:
+ldaps://ldap.invisibi.com/
+Distinguished name of the search base:
+dc=invisibi,dc=com
+LDAP version to use:
+3
+Make local root Database admin:
+Yes
+Does the LDAP database require login?
+No
+LDAP account for root:
+cn=admin,dc=invisibi,dc=com
+
+sudo dpkg-reconfigure ldap-auth-config
+
+Local crypt to use when changing passwords:
+md5
+
+sudo auth-client-config -t nss -p lac_ldap
+
+/etc/ldap/ldap.conf:
+TLS_CACERT /etc/ssl/certs/cacert.pem
+
+sudo pam-auth-update
+
+sudo apt-get install libpam-cracklib
+
+ldapsearch -x -LLL -H ldaps://ldap.invisibi.com/ -b dc=invisibi,dc=com dn
+
+http://sealmemory.blogspot.tw/2012/01/ubuntu-ldap-server.html
+http://www.erikzaadi.com/2011/09/09/connecting-jenkins-to-self-signed-certificated-servers/
+
+/**/
+
+mynetworks = 127.0.0.1 192.168.1.0/24
+smtpd_client_restrictions = permit_mynetworks, reject
+
+ses-smtp-user.20140122-194336
+SMTP Username:
+AKIAII2TYEOTAMLHLUIA
+SMTP Password:
+Ajps9N54fpkV/nevS565qjnneMoSGwPIT9CL9NOO7fwk
+
+ses-smtp-user.20140122-195339
+SMTP Username:
+AKIAIVUMN3VMS46JKUVQ
+SMTP Password:
+Ap28l9A+FjbcNHYPRtbLUYRY1BQz052nt8T+NOmZvNd1
+
+\bye

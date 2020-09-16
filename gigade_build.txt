@@ -1,0 +1,91 @@
+[db]
+
+sudo apt-get install mysql-server
+
+echo 'CREATE DATABASE gigade;' | mysql -u root -p
+tar xOzf 20130621_DB_gigade.sql.tar.gz | mysql -u root -p gigade
+echo "CREATE USER gigade@localhost IDENTIFIED BY '???'; GRANT ALL PRIVILEGES ON gigade . * TO gigade@localhost WITH GRANT OPTION;" | mysql -u root -p
+
+sudo vim /etc/mysql/my.cnf
+bind-address = ?
+
+[deploy]
+
+# source code of gigade
+git clone https://owner@git.gimg.tw/gigade
+cd gigade
+
+git config branch.develop.remote origin
+git config branch.develop.merge refs/heads/develop
+
+git config branch.hotfixes.remote origin
+git config branch.hotfixes.merge refs/heads/hotfixes
+
+#git config branch.hotfixes.remote origin
+#git config branch.hotfixes.merge refs/heads/hotfixes
+
+git config branch.feature1.remote origin
+git config branch.feature1.merge refs/heads/feature1
+
+git checkout newest_branch
+
+ssh -t user@192.168.71.47 'sudo mkdir /home/gigade && sudo chown user:user /home/gigade && sudo mkdir /home/gigade/img.gigade100.com'
+rsync -rv --exclude .git --exclude .gitignore . user@192.168.71.47:/home/gigade/
+
+# source code of cakephp
+cd ..
+git clone git://github.com/cakephp/cakephp.git
+cd cakephp
+git checkout 2.2.2
+
+ssh -t user@192.168.71.47 'sudo mkdir /home/cakephp && sudo chown user:user /home/cakephp'
+rsync -rv --exclude .git --exclude .gitignore . user@192.168.71.47:/home/cakephp/
+
+# image
+rsync -rv img.gigade100.com user@192.168.71.47:/home/gigade/
+
+[web]
+
+cd /home/gigade
+sudo bin/post_install.sh
+chown www-data:www-data img.gigade100.com -R
+
+# setup four config files
+includes/environment.php
+www/Config/database.php
+admin/Config/database.php
+vendor/Config/database.php
+
+sudo apt-get install php5 php5-mysql php-pear php-benchmark php5-curl php-apc php5-imagick imagemagick php-mail php-mail-mime
+sudo pear install Pager
+
+sudo a2dismod autoindex
+sudo a2enmod rewrite
+sudo a2enmod ssl
+sudo a2enmod proxy_http
+echo ServerName `hostname` | sudo tee /etc/apache2/conf.d/ServerName
+
+cd /etc/apache2/sites-available/
+sudo ln -s /home/gigade/conf/prod/* .
+sudo a2ensite www.gigade100.com
+sudo a2ensite admin.gigade100.com
+sudo a2ensite vendor.gigade100.com
+sudo a2ensite img.gigade100.com
+
+cd /etc/apache2/
+sudo ln -s /home/gigade/conf/ip_allow .
+
+# key of https
+sudo mv www.gigade100.tw.key /etc/ssl/private/www.gigade100.tw.key
+sudo chown root:ssl-cert /etc/ssl/private/www.gigade100.tw.key
+sudo chmod 640 /etc/ssl/private/www.gigade100.tw.key
+
+sudo mkdir /etc/ssl/public
+sudo mv www.gigade100.tw.crt /etc/ssl/public/www.gigade100.tw.crt
+sudo chown root:root /etc/ssl/public/www.gigade100.tw.crt
+sudo mv chain-rp.cer /etc/ssl/public/chain-rp.cer
+sudo chown root:root /etc/ssl/public/chain-rp.cer
+
+sudo /etc/init.d/apache2 restart
+
+\bye
