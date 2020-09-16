@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite1" verbose="1" >
+  <parameter name="TMConf" value="conf/TMConf.properties" />
+  <test name="Test1">
+    <listeners>
+      <listener class-name="com.yahoo.testnglib.TMReporter.TMReporter" />
+    </listeners>
+    <groups>
+        <run>
+           <include name="smoke"/>
+        </run>
+    </groups>
+
+    <classes>
+        <class name="com.yahoo.utopia.controllerTest.social.PeopleSearch"/>
+        <class name="com.yahoo.utopia.controllerTest.social.PeopleSearchAdv"/> 
+        <class name="com.yahoo.utopia.controllerTest.social.ContactSearch"/> 
+<!--        <class name="com.yahoo.utopia.controllerTest.social.UpdateSettings"/>  
+        <class name="com.yahoo.utopia.controllerTest.social.PrivacySetting_Guestbook"/> 
+-->    </classes>
+  </test>
+</suite>
