@@ -1,0 +1,391 @@
+MS04-045 Vulnerability in WINS Could Allow Remote Code Execution (870763)
+
+  http://download.microsoft.com/download/5/5/3/5534ae29-1381-440c-822e-439a952d5082/Windows2000-KB870763-x86-ENU.EXE
+  http://download.microsoft.com/download/6/3/0/630485e9-d966-41dd-978e-ae74d8180bc5/Windows2000-KB870763-x86-CHT.EXE
+  http://download.microsoft.com/download/5/9/0/590b4e8e-821c-4249-9b45-79fefd19d194/Windows2000-KB870763-x86-CHS.EXE
+
+  http://download.microsoft.com/download/e/0/e/e0e2b2a8-2dba-4a7d-86b5-e0983cc24c24/WindowsServer2003-KB870763-x86-enu.exe
+  http://download.microsoft.com/download/7/3/b/73b85027-261b-4442-8f10-c7e3d742b7b5/WindowsServer2003-KB870763-x86-cht.exe
+  http://download.microsoft.com/download/8/7/f/87f8c528-e620-4a02-9a34-befe9711d701/WindowsServer2003-KB870763-x86-chs.exe
+
+MS04-044 Vulnerabilities in Windows Kernel and LSASS Could Allow Elevation of Privilege (885835)
+
+  http://download.microsoft.com/download/8/4/e/84e1995c-c98e-4818-9da3-62004c17d80f/Windows2000-KB885835-x86-ENU.EXE
+  http://download.microsoft.com/download/3/6/4/364af009-f4f0-48d4-bf65-de3c5be97616/Windows2000-KB885835-x86-CHT.EXE
+  http://download.microsoft.com/download/b/3/4/b34f886f-0ae1-4387-b930-93b1814c31e3/Windows2000-KB885835-x86-CHS.EXE
+
+  http://download.microsoft.com/download/9/b/7/9b75c063-b57c-4493-a437-b1431722b8c2/WindowsServer2003-KB885835-x86-enu.exe
+  http://download.microsoft.com/download/1/4/d/14d6b17a-9193-4714-a155-150bd2bab60b/WindowsServer2003-KB885835-x86-cht.exe
+  http://download.microsoft.com/download/8/2/4/8241cf97-fa44-488a-897d-e0c94cddbe1d/WindowsServer2003-KB885835-x86-chs.exe
+
+MS04-043 Vulnerability in HyperTerminal Could Allow Code Execution (873339)
+
+  http://download.microsoft.com/download/9/6/5/965578e2-2029-4709-8603-ec5c8467cb21/Windows2000-KB873339-x86-ENU.EXE
+  http://download.microsoft.com/download/7/2/d/72d06718-175a-4db0-9be1-0714ae77bb3d/Windows2000-KB873339-x86-CHT.EXE
+  http://download.microsoft.com/download/8/8/d/88d33daa-8550-412a-8a75-a82574d4ad93/Windows2000-KB873339-x86-CHS.EXE
+
+  http://download.microsoft.com/download/4/2/5/42568fb5-114e-4cec-91f1-be9ef35a2b4c/WindowsServer2003-KB873339-x86-enu.exe
+  http://download.microsoft.com/download/3/4/6/346042a6-6d73-4023-938d-5877030cb576/WindowsServer2003-KB873339-x86-cht.exe
+  http://download.microsoft.com/download/9/a/f/9affe05d-2fc7-48fa-aae7-ba4757bad6ee/WindowsServer2003-KB873339-x86-chs.exe
+
+MS04-041 Vulnerability in WordPad Could Allow Code Execution (885836)
+
+  http://download.microsoft.com/download/8/d/e/8defe3b9-2f7c-4237-a4b0-c2901d09dc1c/Windows2000-KB885836-x86-ENU.EXE
+  http://download.microsoft.com/download/d/4/2/d4266258-34ea-4b91-95aa-b51fe71a1aad/Windows2000-KB885836-x86-CHT.EXE
+  http://download.microsoft.com/download/0/0/1/001ba800-81eb-4774-a17d-70ee5df44357/Windows2000-KB885836-x86-CHS.EXE
+
+  http://download.microsoft.com/download/0/5/9/0597de34-f229-464c-9f03-04bcd2361992/WindowsServer2003-KB885836-x86-enu.exe
+  http://download.microsoft.com/download/5/d/d/5dd98ad9-300e-45a0-aefa-8f44b4cad9ee/WindowsServer2003-KB885836-x86-cht.exe
+  http://download.microsoft.com/download/5/d/4/5d44eefa-a73c-4093-bb4e-e983d5dda04a/WindowsServer2003-KB885836-x86-chs.exe
+
+MS04-037 Vulnerability in Windows Shell Could Allow Remote Code Execution (841356)
+
+  http://download.microsoft.com/download/9/9/3/993d53cd-edf9-4dbb-951f-e890b241c1cd/WindowsServer2003-KB841356-x86-enu.EXE
+  http://download.microsoft.com/download/4/e/1/4e11ebe9-4618-4982-834b-a0becf2cbae8/WindowsServer2003-KB841356-x86-cht.EXE
+  http://download.microsoft.com/download/b/6/8/b684fb6c-db5f-4868-959d-41ad01c9b0f1/WindowsServer2003-KB841356-x86-chs.EXE
+
+  http://download.microsoft.com/download/8/8/0/880dac95-63e0-40b0-8ce6-fbd29efe8d4d/Windows2000-KB841356-x86-ENU.EXE
+  http://download.microsoft.com/download/6/c/5/6c5402b7-4fbd-40cf-a835-3aa332fa93bc/Windows2000-KB841356-x86-CHT.EXE
+  http://download.microsoft.com/download/c/9/0/c9070ee1-147c-4780-8925-a596017160fc/Windows2000-KB841356-x86-CHS.EXE
+
+MS04-036 Vulnerability in NNTP Could Allow Code Execution (883935)
+
+  http://download.microsoft.com/download/f/5/d/f5dec840-8ae8-43b3-989e-a38b8f82c50d/WindowsServer2003-KB883935-x86-enu.EXE
+  http://download.microsoft.com/download/b/f/3/bf3654e8-a4ef-4ed0-98dc-faccad9f1db4/WindowsServer2003-KB883935-x86-cht.EXE
+  http://download.microsoft.com/download/9/f/7/9f7580d1-0681-4c16-8bad-d0bbf5d559eb/WindowsServer2003-KB883935-x86-chs.EXE
+
+  http://download.microsoft.com/download/f/f/0/ff0a1858-da78-42cc-91d9-37f69671630e/Windows2000-KB883935-x86-ENU.EXE
+  http://download.microsoft.com/download/4/c/e/4ce3c33f-cf08-4a3e-b11c-56e3fe70bd1a/Windows2000-KB883935-x86-CHT.EXE
+  http://download.microsoft.com/download/b/0/a/b0a21dd4-8849-4678-ae5f-0fbef300a65a/Windows2000-KB883935-x86-CHS.EXE
+
+MS04-035 Vulnerability in SMTP Could Allow Remote Code Execution (885881)
+
+  http://download.microsoft.com/download/4/a/7/4a795e42-3de7-49ac-969f-a61b8015bc7b/WindowsServer2003-KB885881-x86-enu.EXE
+  http://download.microsoft.com/download/0/c/f/0cf0db91-32fc-4eb7-8a5b-a8808ac155b4/WindowsServer2003-KB885881-x86-cht.EXE
+  http://download.microsoft.com/download/1/c/8/1c8f74c8-b189-485e-b19e-da61b43d4f47/WindowsServer2003-KB885881-x86-chs.EXE
+
+MS04-034 Vulnerability in Compressed (zipped) Folders Could Allow Code Execution (873376)
+
+  http://download.microsoft.com/download/4/e/7/4e76735f-79ce-4b8a-a518-4135602324ea/WindowsServer2003-KB873376-x86-enu.EXE
+  http://download.microsoft.com/download/6/9/7/697fb0dc-6ff4-4c8a-a879-27949a7b468c/WindowsServer2003-KB873376-x86-cht.EXE
+  http://download.microsoft.com/download/6/1/4/6146c2f3-927e-4a97-a51f-deb08f9c8eda/WindowsServer2003-KB873376-x86-chs.EXE
+
+MS04-032 Security Update for Microsoft Windows (840987)
+
+  http://download.microsoft.com/download/5/1/8/518b9eae-79f1-49a2-b196-4759b5e7c600/WindowsServer2003-KB840987-x86-enu.EXE
+  http://download.microsoft.com/download/a/8/e/a8ea8f7f-435f-47a9-80b2-8e72be68c85f/WindowsServer2003-KB840987-x86-cht.EXE
+  http://download.microsoft.com/download/e/9/7/e97f46ac-e50a-48a3-b068-56eed1aaf0c9/WindowsServer2003-KB840987-x86-chs.EXE
+
+  http://download.microsoft.com/download/8/0/f/80f7dee4-175d-436e-9997-dc5cbc2d89f2/Windows2000-KB840987-x86-ENU.EXE
+  http://download.microsoft.com/download/2/b/c/2bc487f8-bcaa-4e81-8149-807c55144a5e/Windows2000-KB840987-x86-CHT.EXE
+  http://download.microsoft.com/download/8/c/3/8c3a6f02-0ea2-479f-b443-4f20da7d2bb9/Windows2000-KB840987-x86-CHS.EXE
+
+MS04-031 Vulnerability in NetDDE Could Allow Remote Code Execution (841533)
+
+  http://download.microsoft.com/download/0/6/5/0650631d-e64b-44ab-9783-84bc0653f512/WindowsServer2003-KB841533-x86-enu.EXE
+  http://download.microsoft.com/download/5/7/0/57026e89-9209-4734-a502-29dc47fbf84b/WindowsServer2003-KB841533-x86-cht.EXE
+  http://download.microsoft.com/download/0/a/2/0a2beb9c-6f91-477e-8814-88b305277771/WindowsServer2003-KB841533-x86-chs.EXE
+
+  http://download.microsoft.com/download/5/b/e/5becb7dc-1aaa-4123-8cf3-3a13827fe826/Windows2000-KB841533-x86-ENU.EXE
+  http://download.microsoft.com/download/b/2/f/b2f7c49d-93e0-4758-a24c-5989ba1c2881/Windows2000-KB841533-x86-CHT.EXE
+  http://download.microsoft.com/download/b/6/8/b680567e-c4cf-48dd-ab50-74a516b8b16e/Windows2000-KB841533-x86-CHS.EXE
+
+MS04-030 Vulnerability in WebDav XML Message Handler Could Lead to a Denial of Service (824151)
+
+  http://download.microsoft.com/download/8/8/c/88cd7fa0-f5be-4d95-b54c-13ca4a8d9f0f/WindowsServer2003-KB824151-x86-enu.EXE
+  http://download.microsoft.com/download/b/e/7/be730db4-4b0c-4e4d-9f78-fad5bed8ef05/WindowsServer2003-KB824151-x86-cht.EXE
+  http://download.microsoft.com/download/f/f/d/ffd6853c-0fde-433e-9228-b421570a0d12/WindowsServer2003-KB824151-x86-chs.EXE
+
+  http://download.microsoft.com/download/b/3/e/b3ecab57-2791-46c4-9508-3e7d342910f7/Windows2000-KB824151-x86-ENU.EXE
+  http://download.microsoft.com/download/8/7/4/87414eb6-de8a-4c30-9d9b-f03fdc351a72/Windows2000-KB824151-x86-CHT.EXE
+  http://download.microsoft.com/download/1/b/a/1badb948-55d5-430c-9869-a659aa257dd5/Windows2000-KB824151-x86-CHS.EXE
+
+/**/
+
+MS04-028 Buffer Overrun in JPEG Processing (GDI+) Could Allow Code Execution (833987)
+
+  http://download.microsoft.com/download/e/5/9/e5901f37-e33b-433c-9beb-9f58428c93de/WindowsServer2003-KB833987-x86-ENU.EXE
+  http://download.microsoft.com/download/1/1/d/11d1e075-0ade-41e1-b04f-961735347fa3/WindowsServer2003-KB833987-x86-CHT.EXE
+  http://download.microsoft.com/download/f/a/b/faba4abe-2735-4018-a947-0ae9f0162b09/WindowsServer2003-KB833987-x86-CHS.EXE
+
+/**/
+
+MS04-024 Vulnerability in Windows Shell Could Allow Remote Code Execution (839645)
+
+  http://download.microsoft.com/download/e/7/9/e79e9c09-1755-4ecc-8ccd-fc915c9e0cbf/WindowsServer2003-KB839645-x86-enu.exe
+  http://download.microsoft.com/download/f/d/1/fd1357a0-1ae6-408c-b9bf-e05501e10a3e/WindowsServer2003-KB839645-x86-cht.exe
+  http://download.microsoft.com/download/c/f/c/cfc40edd-df08-4633-a47e-7ca94a214736/WindowsServer2003-KB839645-x86-chs.exe
+
+  http://download.microsoft.com/download/8/6/3/863ea51d-b378-4a6a-927c-d0dc38f4fed1/Windows2000-KB839645-x86-ENU.EXE
+  http://download.microsoft.com/download/3/1/0/3108bea4-a28d-4281-b1ff-05334a67d086/Windows2000-KB839645-x86-CHT.EXE
+  http://download.microsoft.com/download/8/a/b/8abb5467-c4bc-4169-9b45-38bdfd420b4a/Windows2000-KB839645-x86-CHS.EXE
+
+MS04-023 Vulnerability in HTML Help Could Allow Code Execution (840315)
+
+  http://download.microsoft.com/download/b/4/2/b420044b-eb3a-442b-bba6-0156aa7896ef/WindowsServer2003-KB840315-x86-enu.exe
+  http://download.microsoft.com/download/6/c/7/6c789bfe-e9f1-4aa5-ae4c-c93761af0d68/WindowsServer2003-KB840315-x86-cht.exe
+  http://download.microsoft.com/download/7/f/e/7fe56ac7-653c-4522-9867-5f2a241d868c/WindowsServer2003-KB840315-x86-chs.exe
+
+  http://download.microsoft.com/download/7/2/7/727d9721-abdc-4ecf-ab36-4635cfd61172/Windows2000-KB840315-x86-ENU.EXE
+  http://download.microsoft.com/download/7/4/a/74aae161-1f8f-4bca-84d7-2166e33a1eb7/Windows2000-KB840315-x86-CHT.EXE
+  http://download.microsoft.com/download/b/e/5/be5faf26-fd4a-482c-9b90-abdf504b485a/Windows2000-KB840315-x86-CHS.EXE
+
+MS04-022 Vulnerability in Task Scheduler Could Allow Code Execution (841873)
+
+  http://download.microsoft.com/download/f/f/5/ff52e0cb-e04d-4dc0-9177-6272557cd6d4/Windows2000-KB841873-x86-ENU.EXE
+  http://download.microsoft.com/download/c/8/0/c80731d3-91ef-406e-8c87-30c9cb79c73e/Windows2000-KB841873-x86-CHT.EXE
+  http://download.microsoft.com/download/0/7/e/07e2cb43-808e-4938-a75d-a23243f8332f/Windows2000-KB841873-x86-CHS.EXE
+
+MS04-020 Vulnerability in POSIX Could Allow Code Execution (841872)
+
+  http://download.microsoft.com/download/7/9/c/79c0720a-3c99-4a5b-87ed-2fc6e1bc0426/Windows2000-KB841872-x86-ENU.EXE
+  http://download.microsoft.com/download/e/5/8/e58fa013-e66d-4da9-8e97-d40880a04a18/Windows2000-KB841872-x86-CHT.EXE
+  http://download.microsoft.com/download/7/6/d/76d96b60-7745-4e94-9444-216592fcb7fc/Windows2000-KB841872-x86-CHS.EXE
+
+MS04-019 Vulnerability in Utility Manager Could Allow Code Execution (842526)
+
+  http://download.microsoft.com/download/3/b/6/3b627f83-d5e4-46fb-9fd0-4a1330c57981/Windows2000-KB842526-x86-ENU.EXE
+  http://download.microsoft.com/download/3/c/9/3c931841-a647-4a5a-b3ec-f2e7c014d0a2/Windows2000-KB842526-x86-CHT.EXE
+  http://download.microsoft.com/download/3/7/7/3771edf8-86d0-42e3-9d43-022fb6ccc841/Windows2000-KB842526-x86-CHS.EXE
+
+/*/
+
+MS04-015 Vulnerability in Help and Support Center Could Allow Remote Code Execution (840374)
+
+  http://download.microsoft.com/download/a/8/c/a8c904e2-7955-47e2-a2ae-e7f6490eee95/WindowsServer2003-KB840374-x86-ENU.EXE
+  http://download.microsoft.com/download/4/9/3/493d40ac-59a9-4bd5-aa17-807d1683d64c/WindowsServer2003-KB840374-x86-CHT.EXE
+  http://download.microsoft.com/download/8/d/7/8d77fd9a-5ec5-4c89-b4bd-06f769520565/WindowsServer2003-KB840374-x86-CHS.EXE
+
+MS04-014 Vulnerability in the Microsoft Jet Database Engine Could Allow Code Execution (837001)
+
+  http://download.microsoft.com/download/f/2/0/f20ae35d-b404-4021-9d9c-daab1f376462/Windows2000-KB837001-x86-ENU.EXE
+  http://download.microsoft.com/download/a/8/f/a8ff0665-58b8-4d69-9aa2-f09bf21dc997/Windows2000-KB837001-x86-CHT.EXE
+  http://download.microsoft.com/download/2/8/d/28d81dee-56ec-4c45-ad63-bf5542c7f1f8/Windows2000-KB837001-x86-CHS.EXE
+
+  http://download.microsoft.com/download/a/1/0/a1080cda-4801-4a0c-8692-0d9773b1cca5/WindowsServer2003-KB837001-x86-ENU.EXE
+  http://download.microsoft.com/download/b/7/c/b7c1e782-db0a-4a5f-85f8-588752c490ee/WindowsServer2003-KB837001-x86-CHT.EXE
+  http://download.microsoft.com/download/9/a/9/9a9a13ed-7685-484c-b151-28b0205c72d0/WindowsServer2003-KB837001-x86-CHS.EXE
+
+MS04-012 Cumulative Update for Microsoft RPC/DCOM (828741)
+
+  http://download.microsoft.com/download/5/6/c/56cdedb2-fa2e-45ba-9a75-1b0335484386/Windows2000-KB828741-x86-ENU.EXE
+  http://download.microsoft.com/download/0/7/c/07cfda7f-33c3-4ac0-ae1e-47c8c06bdc5c/Windows2000-KB828741-x86-CHT.EXE
+  http://download.microsoft.com/download/7/4/0/74021cf0-1d7e-4858-82de-7a7da454cec6/Windows2000-KB828741-x86-CHS.EXE
+
+  http://download.microsoft.com/download/0/0/9/00972728-4bf7-4a73-b17e-85b81e10ab96/WindowsServer2003-KB828741-x86-ENU.EXE
+  http://download.microsoft.com/download/4/6/3/46373a62-1038-4583-b377-553e2cfde74b/WindowsServer2003-KB828741-x86-CHT.EXE
+  http://download.microsoft.com/download/9/f/1/9f1dd724-2ca3-4311-9d74-33eaeca24782/WindowsServer2003-KB828741-x86-CHS.EXE
+
+MS04-011 Security Update for Microsoft Windows (835732)
+
+  http://download.microsoft.com/download/f/a/a/faa796aa-399d-437a-9284-c3536e9f2e6e/Windows2000-KB835732-x86-ENU.EXE
+  http://download.microsoft.com/download/5/8/c/58c32cf2-13a2-4306-9fe7-7c1487f059ee/Windows2000-KB835732-x86-CHT.EXE
+  http://download.microsoft.com/download/1/0/4/104ab4fe-660d-4d6d-b50a-ea4491dd7fb2/Windows2000-KB835732-x86-CHS.EXE
+
+  http://download.microsoft.com/download/4/d/7/4d74d7ae-e1f7-4c0b-b6e3-ed05f5a3c580/WindowsServer2003-KB835732-x86-ENU.EXE
+  http://download.microsoft.com/download/2/3/7/237e6a42-68e2-4f68-893a-9381c8f137fc/WindowsServer2003-KB835732-x86-CHT.EXE
+  http://download.microsoft.com/download/4/e/3/4e3083d3-fb8b-4e57-9c9d-7e9f1af190fa/WindowsServer2003-KB835732-x86-CHS.EXE
+
+MS04-006 Vulnerability in the Windows Internet Naming Service (WINS) Could Allow Code Execution (830352)
+
+  http://download.microsoft.com/download/c/9/6/c966403d-c0c1-43a4-8f16-af7047d32abc/Windows2000-KB830352-x86-ENU.EXE
+  http://download.microsoft.com/download/d/a/d/dad881f6-9f6a-4dfc-8981-aaaa5ae02639/Windows2000-KB830352-x86-CHT.EXE
+  http://download.microsoft.com/download/b/7/9/b795f171-e117-40ac-9bf5-fc8dd1ca7e96/Windows2000-KB830352-x86-CHS.EXE
+
+  http://download.microsoft.com/download/2/b/f/2bf1da36-6368-4e92-9dd2-daa388450028/WindowsServer2003-KB830352-x86-ENU.exe
+  http://download.microsoft.com/download/7/a/4/7a48967b-7cd8-4d66-9be8-d197a463c6a6/WindowsServer2003-KB830352-x86-CHT.exe
+  http://download.microsoft.com/download/d/8/a/d8ac8ff6-7662-4cc1-bdda-f1703b17b900/WindowsServer2003-KB830352-x86-CHS.exe
+
+MS04-003 Buffer Overrun in MDAC Function Could Allow Code Execution (832483)
+
+  http://download.microsoft.com/download/c/2/4/c245528e-a1e4-492e-bcf4-e004a052d93b/ENU_Q832483_MDAC_x86.EXE
+  http://download.microsoft.com/download/2/3/a/23abad1f-4440-413b-b3c7-43515891907e/CHT_Q832483_MDAC_x86.EXE
+  http://download.microsoft.com/download/7/9/8/7987efe1-a817-4340-bd7b-a39460101a40/CHN_Q832483_MDAC_x86.EXE
+
+MS03-049 Buffer Overrun in the Workstation Service Could Allow Code Execution (828749)
+
+  http://download.microsoft.com/download/3/c/6/3c6d56ff-ff8e-4322-84cb-3bf9a915e6d9/Windows2000-KB828749-x86-ENU.exe
+  http://download.microsoft.com/download/9/e/1/9e183d72-3404-4fa5-aaf9-ac0aa4f561db/Windows2000-KB828749-x86-CHT.exe
+  http://download.microsoft.com/download/9/c/5/9c579720-63e9-478a-bdcb-70087ccad56c/Windows2000-KB828749-x86-CHS.exe
+
+MS03-045 Buffer Overrun in the ListBox and in the ComboBox Control Could Allow Code Execution (824141)
+
+  http://download.microsoft.com/download/5/0/a/50acd5b3-b7e4-4262-8e0b-eb7dada676f4/Windows2000-KB824141-x86-ENU.exe
+  http://download.microsoft.com/download/0/8/a/08ad2e3b-6c84-4d64-b6b3-ddf663e174e7/Windows2000-KB824141-x86-CHT.exe
+  http://download.microsoft.com/download/c/a/c/cac5dfd7-7a58-4745-b9f6-6099e1f695b5/Windows2000-KB824141-x86-CHS.exe
+
+  http://download.microsoft.com/download/0/d/0/0d03f099-3673-42ca-81f9-5533fc5c18fb/WindowsServer2003-KB824141-x86-ENU.exe
+  http://download.microsoft.com/download/2/e/f/2ef69296-49d8-473b-91c6-0abb78d8bc3c/WindowsServer2003-KB824141-x86-CHT.exe
+  http://download.microsoft.com/download/3/8/5/38559da0-66b5-4a63-9b22-6d851ee9a56f/WindowsServer2003-KB824141-x86-CHS.exe
+
+MS03-044 Buffer Overrun in Windows Help and Support Center Could Lead to System Compromise (825119)
+
+  http://download.microsoft.com/download/7/a/5/7a57524c-8aba-474b-9333-ae1d61f020c9/Windows2000-KB825119-x86-ENU.exe
+  http://download.microsoft.com/download/2/2/2/22246250-5834-4b0c-a801-c2ac1854056f/Windows2000-KB825119-x86-CHT.exe
+  http://download.microsoft.com/download/8/4/3/84325b5b-dfe5-4c20-b498-2300fd730c60/Windows2000-KB825119-x86-CHS.exe
+
+  http://download.microsoft.com/download/4/3/1/431452b5-4e2f-4d86-9f5d-6413d755fb34/WindowsServer2003-KB825119-x86-ENU.exe
+  http://download.microsoft.com/download/3/4/f/34f56be5-7daa-4e2d-b1a0-26518e2f9156/WindowsServer2003-KB825119-x86-CHT.exe
+  http://download.microsoft.com/download/f/e/3/fe3565d3-5f02-4331-8314-8d2af0b6f015/WindowsServer2003-KB825119-x86-CHS.exe
+
+MS03-043 Buffer Overrun in Messenger Service Could Allow Code Execution (828035)
+
+  http://download.microsoft.com/download/5/2/3/5231e3ef-ae49-4ee6-aa06-f9f226bc9cfb/Windows2000-KB828035-x86-ENU.exe
+  http://download.microsoft.com/download/6/0/8/608c95f8-69fe-4639-9c75-742d84e9e36a/Windows2000-KB828035-x86-CHT.exe
+  http://download.microsoft.com/download/f/7/b/f7bdb206-dd81-415d-b023-0a40991ff9dd/Windows2000-KB828035-x86-CHS.exe
+
+  http://download.microsoft.com/download/b/b/6/bb6151ee-f888-409c-81e0-60bfb601d8e9/WindowsServer2003-KB828035-x86-ENU.exe
+  http://download.microsoft.com/download/c/2/8/c28ff392-ce4a-495d-b946-eaf2628cdf86/WindowsServer2003-KB828035-x86-CHT.exe
+  http://download.microsoft.com/download/b/a/e/bae7c084-34a6-455e-bc55-47325e262f36/WindowsServer2003-KB828035-x86-CHS.exe
+
+MS03-042 Buffer Overflow in Windows Troubleshooter ActiveX Control Could Allow Code Execution (826232)
+
+  http://download.microsoft.com/download/8/4/c/84cd9acc-246c-4a59-b9b2-297c86902a56/Windows2000-KB826232-x86-ENU.exe
+  http://download.microsoft.com/download/c/5/3/c532e4a3-1178-4b79-888d-762daca85c35/Windows2000-KB826232-x86-CHT.exe
+  http://download.microsoft.com/download/1/b/4/1b475ffc-0ce4-436a-b46e-fcfa10db17e6/Windows2000-KB826232-x86-CHS.exe
+
+MS03-041 Vulnerability in Authenticode Verification Could Allow Remote Code Execution (823182)
+
+  http://download.microsoft.com/download/7/2/b/72b8a6a7-def8-4769-bc4b-2d1fa313b1da/Windows2000-KB823182-x86-ENU.exe
+  http://download.microsoft.com/download/b/0/1/b01eb0ee-ac3e-40f0-9fa6-2bc8f4465403/Windows2000-KB823182-x86-CHT.exe
+  http://download.microsoft.com/download/0/d/c/0dcd3d96-a62f-4abd-85ab-16e16e0fda7b/Windows2000-KB823182-x86-CHS.exe
+
+  http://download.microsoft.com/download/0/1/2/0126e70b-7872-404c-978e-daa6b3bd8476/WindowsServer2003-KB823182-x86-ENU.exe
+  http://download.microsoft.com/download/6/0/0/600fd16d-b23e-41a7-8419-19fb82a9cf91/WindowsServer2003-KB823182-x86-CHT.exe
+  http://download.microsoft.com/download/a/1/3/a13bf07e-484a-4694-93d7-3bba5834548a/WindowsServer2003-KB823182-x86-CHS.exe
+
+MS03-023 Buffer Overrun In HTML Converter Could Allow Code Execution (823559)
+
+  http://download.microsoft.com/download/0/0/6/006cef65-34f3-4db4-8153-e4a5bcc9b62e/Windows2000-KB823559-x86-ENU.exe
+  http://download.microsoft.com/download/8/c/d/8cd50073-93ea-49e7-8e32-5b3c9222f29e/Windows2000-KB823559-x86-CHT.exe
+  http://download.microsoft.com/download/5/c/0/5c01e315-f3c9-45d3-93d6-2e07072074c3/Windows2000-KB823559-x86-CHS.exe
+
+  http://download.microsoft.com/download/1/8/2/18247efe-b9d4-4ecb-abf2-405e8f1f3734/WindowsServer2003-KB823559-x86-ENU.exe
+  http://download.microsoft.com/download/6/7/f/67fb1862-f510-4d95-baaf-fa9dca97737b/WindowsServer2003-KB823559-x86-CHT.exe
+  http://download.microsoft.com/download/e/5/c/e5c6db02-4a08-4e0e-905d-822e355e070f/WindowsServer2003-KB823559-x86-CHS.exe
+
+/**/
+
+MS03-030 Unchecked Buffer in DirectX Could Enable System Compromise (819696)
+
+  Microsoft DirectX 7.0 on Windows 2000
+    http://download.microsoft.com/download/b/7/9/b790e327-c5b9-4035-8433-6ef8084146ed/Windows2000-KB819696-x86-ENU.exe
+    http://download.microsoft.com/download/7/5/4/754dd40d-07bd-4b23-8673-22992bc9d432/Windows2000-KB819696-x86-CHT.exe
+    http://download.microsoft.com/download/2/2/8/228e105a-304c-4ad6-bb1e-fb28c847746d/Windows2000-KB819696-x86-CHS.exe
+
+  Microsoft DirectX 8.0, Direct X8.0a, DirectX 8.1, DirectX 8.1a, and DirectX 8.1b on Windows 98, Windows 98 SE, Windows Millennium Edition, or Windows 2000
+    http://download.microsoft.com/download/b/6/9/b69e8d84-7557-491c-bdc5-30db397264cb/DirectX8-KB819696-x86-ENU.exe
+    http://download.microsoft.com/download/5/d/e/5debfe29-12e8-4269-ad66-6ab317b70426/DirectX8-KB819696-x86-CHT.exe
+    http://download.microsoft.com/download/5/b/5/5b59d885-e922-413c-8019-6fb3a72e65ec/DirectX8-KB819696-x86-CHS.exe
+
+  Microsoft DirectX 8.1 on Windows Server 2003 32-bit Edition
+    http://download.microsoft.com/download/5/e/6/5e6f9e28-b684-4788-8b1a-013eb62a41ba/WindowsServer2003-KB819696-x86-ENU.exe
+    http://download.microsoft.com/download/5/d/4/5d48ab81-9947-40d3-9f43-6e35f25285cb/WindowsServer2003-KB819696-x86-CHT.exe
+    http://download.microsoft.com/download/b/d/f/bdff38d7-043e-4d53-9f3c-95eb67c3b22a/WindowsServer2003-KB819696-x86-CHS.exe
+
+  Microsoft DirectX 9.0a: All Windows versions except Windows NT 4.0
+    http://download.microsoft.com/download/a/e/1/ae129ec6-e61b-4670-a133-4c8c98f1aba4/DirectX9-KB819696-x86-ENU.exe
+    http://download.microsoft.com/download/3/b/1/3b19b969-9f28-4c71-b7ad-caba65020f88/DirectX9-KB819696-x86-CHT.exe
+    http://download.microsoft.com/download/8/b/e/8be33230-429b-40fb-8693-0457afde3cdc/DirectX9-KB819696-x86-CHS.exe
+
+/**/
+
+MS04-040 Cumulative Security Update for Internet Explorer (889293)
+
+    http://download.microsoft.com/download/b/a/c/bac5bccc-f2c3-40a3-b010-b1c38cb2a963/IE6.0sp1-KB889293-Windows-2000-XP-x86-ENU.exe
+    http://download.microsoft.com/download/0/c/a/0ca07d73-cdec-436e-98ad-35f1633bfc57/IE6.0sp1-KB889293-Windows-2000-XP-x86-CHT.exe
+    http://download.microsoft.com/download/1/4/8/1483f31b-c987-462f-ad00-113df648a69c/IE6.0sp1-KB889293-Windows-2000-XP-x86-CHS.exe
+
+MS04-028 Buffer Overrun in JPEG Processing (GDI+) Could Allow Code Execution (833987)
+
+   http://download.microsoft.com/download/e/c/9/ec9eff7c-b230-438a-8fe8-9f0f091c7e7b/IE6.0sp1-KB833989-x86-ENU.exe
+   http://download.microsoft.com/download/8/1/2/81287201-d51b-4371-9870-775e0a6e4121/IE6.0sp1-KB833989-x86-CHT.exe
+   http://download.microsoft.com/download/9/1/d/91d72bac-45e5-404b-8705-32da6377a7d4/IE6.0sp1-KB833989-x86-CHS.exe
+
+Internet Explorer 6 Service Pack 1
+
+  http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/EN-US/ie6setup.exe
+  http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/TW/ie6setup.exe
+  http://download.microsoft.com/download/ie6sp1/finrel/6_sp1/W98NT42KMeXP/CN/ie6setup.exe
+
+/**/
+
+Outlook Express
+
+MS04-018 Cumulative Security Update for Outlook Express (823353)
+
+  Microsoft Outlook Express 5.5 Service Pack 2
+
+    http://download.microsoft.com/download/c/c/e/cce59930-1dbe-434e-8d3e-264e31c8c1f0/IE5.5sp2-KB823353-x86-ENU.exe
+    http://download.microsoft.com/download/b/8/f/b8f8292e-72e5-424f-b8bc-eeb00d484070/IE5.5sp2-KB823353-x86-CHT.exe
+    http://download.microsoft.com/download/2/a/e/2ae70bb0-cdf3-4f71-8b0c-ba2e58e45828/IE5.5sp2-KB823353-x86-CHS.exe
+
+  Microsoft Outlook Express 6
+
+    http://download.microsoft.com/download/4/1/6/4166de99-eb82-4f73-95aa-3b796b8ef020/IE6.0-KB823353-WindowsXP-x86-ENU.exe
+    http://download.microsoft.com/download/7/b/6/7b6ce694-e2b8-4dd5-9317-d71140d78ae3/IE6.0-KB823353-WindowsXP-x86-CHT.exe
+    http://download.microsoft.com/download/6/5/d/65da3b74-3c35-4677-bb0e-970279129508/IE6.0-KB823353-WindowsXP-x86-CHS.exe
+
+  Microsoft Outlook Express 6 Service Pack 1
+
+    http://download.microsoft.com/download/1/1/d/11db0514-83d8-46a8-9d71-b01a86c20711/IE6.0sp1-KB823353-x86-ENU.exe
+    http://download.microsoft.com/download/a/7/7/a7756ec1-640a-4fcf-9f99-349315b2c5f7/IE6.0sp1-KB823353-x86-CHT.exe
+    http://download.microsoft.com/download/c/8/6/c864ce25-6406-4077-8c97-5f7e1caff16c/IE6.0sp1-KB823353-x86-CHS.exe
+
+  Microsoft Outlook Express 6 on Windows Server 2003
+
+    http://download.microsoft.com/download/7/7/3/773c1014-30ed-4a37-ae5a-09be1918e1a3/WindowsServer2003-KB823353-x86-enu.exe
+    http://download.microsoft.com/download/5/4/a/54ae14d9-b352-4c88-a960-c0848f33a5a9/WindowsServer2003-KB823353-x86-cht.exe
+    http://download.microsoft.com/download/6/4/5/645854ad-f753-4200-8ce0-451523e6ef69/WindowsServer2003-KB823353-x86-chs.exe
+
+/**/
+
+Office XP
+
+MS04-033 Vulnerability in Microsoft Excel Could Allow Code Execution (886836)
+
+  http://download.microsoft.com/download/2/d/3/2d391588-1776-4819-8fe7-b21457966997/officexp-kb873366-fullfile-enu.exe
+  http://download.microsoft.com/download/e/1/3/e13101e9-3787-490b-b534-9973d01796a6/officexp-kb873366-fullfile-cht.exe
+  http://download.microsoft.com/download/a/4/6/a46c372f-4f64-49c2-8826-ef166f59c38e/officexp-kb873366-fullfile-chs.exe
+
+MS04-028 Buffer Overrun in JPEG Processing (GDI+) Could Allow Code Execution (833987)
+
+  http://download.microsoft.com/download/b/3/4/b349420c-7d50-4dd0-bff2-249cf2db43fa/officexp-kb832332-client-enu.exe
+  http://download.microsoft.com/download/a/2/d/a2ddd247-a842-4c8a-8ef4-f22d8eff1f8b/officexp-kb832332-client-cht.exe
+  http://download.microsoft.com/download/3/7/0/37052d05-3500-4a8c-9715-404b41d6f735/officexp-kb832332-client-chs.exe
+
+Office XP SP3
+
+  http://download.microsoft.com/download/9/1/f/91ffc6b2-0745-470b-8dd3-1285b85db12b/OfficeXpSp3-kb832671-client-enu.exe
+  http://download.microsoft.com/download/9/1/f/91ffc6b2-0745-470b-8dd3-1285b85db12b/OfficeXpSp3-kb832671-fullfile-enu.exe
+
+  http://download.microsoft.com/download/5/a/e/5aea6aba-2436-425a-ba76-6a7388539242/OfficeXpSp3-kb832671-client-cht.exe
+  http://download.microsoft.com/download/5/a/e/5aea6aba-2436-425a-ba76-6a7388539242/OfficeXpSp3-kb832671-fullfile-cht.exe
+
+  http://download.microsoft.com/download/9/c/0/9c0d55d8-2985-4dd8-8ad4-9b412eed4a87/OfficeXpSp3-kb832671-client-chs.exe
+  http://download.microsoft.com/download/9/c/0/9c0d55d8-2985-4dd8-8ad4-9b412eed4a87/OfficeXpSp3-kb832671-fullfile-chs.exe
+
+/**/
+
+MS03-031 Cumulative Patch for Microsoft SQL Server (815495)
+
+  http://download.microsoft.com/download/6/9/e/69e80e6d-fb5e-4e84-9c4f-08a57917bc61/SQL2000-KB815495-8.00.0818-ENU.exe
+  http://download.microsoft.com/download/a/3/5/a3539197-4afd-4eff-a2be-69813241519d/SQL2000-KB815495-8.00.0818-CHT.exe
+  http://download.microsoft.com/download/0/1/6/016722d1-fb86-48c9-8e65-27ad7593cd4a/SQL2000-KB815495-8.00.0818-CHS.exe
+
+
+SQL2000 SP3
+
+  http://download.microsoft.com/download/8/7/5/875e38ea-e582-4ee2-9485-b459cd9c0082/sql2kasp3.exe
+  http://download.microsoft.com/download/8/7/5/875e38ea-e582-4ee2-9485-b459cd9c0082/sql2kdesksp3.exe
+  http://download.microsoft.com/download/8/7/5/875e38ea-e582-4ee2-9485-b459cd9c0082/sql2ksp3.exe
+
+  http://download.microsoft.com/download/d/1/a/d1a2f35e-07da-4618-8071-0f93c80e7351/cht_sql2kasp3.exe
+  http://download.microsoft.com/download/d/1/a/d1a2f35e-07da-4618-8071-0f93c80e7351/cht_sql2kdesksp3.exe
+  http://download.microsoft.com/download/d/1/a/d1a2f35e-07da-4618-8071-0f93c80e7351/cht_sql2ksp3.exe
+
+  http://download.microsoft.com/download/d/d/e/dde427eb-0296-4eac-a47c-d11a66b03816/chs_sql2kasp3.exe
+  http://download.microsoft.com/download/d/d/e/dde427eb-0296-4eac-a47c-d11a66b03816/chs_sql2kdesksp3.exe
+  http://download.microsoft.com/download/d/d/e/dde427eb-0296-4eac-a47c-d11a66b03816/chs_sql2ksp3.exe
+
+\bye

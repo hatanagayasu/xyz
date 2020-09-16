@@ -1,0 +1,19 @@
+wget --limit-rate=12k --no-host-directories --cut-dirs=1 --recursive \
+  --include-directories=/old_web/java http://www.hk8.org/old_web/
+
+--no-parent
+--include-directories=LIST
+--exclude-directories=LIST
+
+先 POST 到有輸入帳號密碼的那頁
+wget --save-cookies cookies.txt \
+--post-data 'user=foo&password=bar' \
+http://server.com/auth.php
+至於 post data 的 field name 可能要先看那頁的 source 來指定
+
+接下來就可以用剛剛存的 cookie 來 mirror 想要的網頁了
+wget --load-cookies cookies.txt \
+-m -E -k \
+http://server.com/interesting/article.php
+
+\bye

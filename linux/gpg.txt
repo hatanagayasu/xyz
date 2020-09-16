@@ -1,0 +1,99 @@
+* 產生自己的 publickey & privatekey
+
+  在自己機器上用下面的指令產生 publickey 與 privatekey：
+
+  $ gpg --gen-key
+
+  應該會有許多問題要答，分別是：
+
+  * Your selection? 1 (用 DSA & Elgamal)
+  * What keysize do you want? (2048) 4096 (最高的 4096 bits)
+  * Key is valid for? (0) 0 (這把 key 不設 expire)
+  * Is this correct? (y/N) y (確定不設 expire)
+  * Real name: Gea-Suan Lin (名字)
+  * Email address: gslin@ccca.nctu.edu.tw (e-mail)
+  * Comment: (不用填，enter 過去)
+  * Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o (Okay)
+  * Enter passphrase: !@#$%^ (設個密碼吧)
+  * Repeat passphrase: !@#$%^ (同樣的密碼再打一次)
+
+  然後讓他跑一陣子 (4096 bits 比較久)，這樣應該就把 key 生出來了，像：
+
+  gpg: checking the trustdb
+  gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+  gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+  pub   1024D/31ABE498 2005-03-12
+        Key fingerprint = 826E E0DF 72ED 4BEB FA85  52E3 9F02 FDC3 31AB E498
+  uid                  Gea-Suan Lin &lt;gslin@ccca.nctu.edu.tw>
+  sub   4096g/69E68E46 2005-03-12
+
+* 設定 key
+
+  將這把 key export 出來：
+
+  $ gpg -a --export gslin > /tmp/publickey.gslin
+
+  然後把 publickey.gslin 拿到 mysql server 主機上 import 給 root 處理：
+
+  # gpg --import &lt; publickey.gslin
+
+  然後設定信賴程度：
+
+  # gpg --edit-key gslin trust
+
+  Your decision? 5 (I trust ultimately)
+  Do you really want to set this key to ultimate trust? (y/N) y
+  Command> save (存進去)* 產生自己的 publickey & privatekey
+
+  在自己機器上用下面的指令產生 publickey 與 privatekey：
+
+  $ gpg --gen-key
+
+  應該會有許多問題要答，分別是：
+
+  * Your selection? 1 (用 DSA & Elgamal)
+  * What keysize do you want? (2048) 4096 (最高的 4096 bits)
+  * Key is valid for? (0) 0 (這把 key 不設 expire)
+  * Is this correct? (y/N) y (確定不設 expire)
+  * Real name: Gea-Suan Lin (名字)
+  * Email address: gslin@ccca.nctu.edu.tw (e-mail)
+  * Comment: (不用填，enter 過去)
+  * Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o (Okay)
+  * Enter passphrase: !@#$%^ (設個密碼吧)
+  * Repeat passphrase: !@#$%^ (同樣的密碼再打一次)
+
+  然後讓他跑一陣子 (4096 bits 比較久)，這樣應該就把 key 生出來了，像：
+
+  gpg: checking the trustdb
+  gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+  gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+  pub   1024D/31ABE498 2005-03-12
+        Key fingerprint = 826E E0DF 72ED 4BEB FA85  52E3 9F02 FDC3 31AB E498
+  uid                  Gea-Suan Lin &lt;gslin@ccca.nctu.edu.tw>
+  sub   4096g/69E68E46 2005-03-12
+
+* 設定 key
+
+  將這把 key export 出來：
+
+  $ gpg -a --export gslin > /tmp/publickey.gslin
+
+  然後把 publickey.gslin 拿到 mysql server 主機上 import 給 root 處理：
+
+  # gpg --import &lt; publickey.gslin
+
+  然後設定信賴程度：
+
+  # gpg --edit-key gslin trust
+
+  Your decision? 5 (I trust ultimately)
+  Do you really want to set this key to ultimate trust? (y/N) y
+  Command> save (存進去)
+
+#!/bin/sh
+  DATE=/bin/date +%Y%m%d
+  /usr/local/bin/mysqldump -A -u root --password=PASSWORD | gzip -9 | 
+  uuencode mysql-${DATE}.gz | gpg -a -e -r gslin | 
+  mail -s "evil.NCTU.edu.tw MySQL backup (${DATE})" evilGMAIL@gmail.com
+
+\bye

@@ -1,0 +1,10 @@
+vnc:
+
+installwatch -o t.log ./vncinstall /usr/local/bin /usr/local/man
+__lot t.log install
+
+find . -type f -perm +111 -exec strip {} \;
+
+makepkg vnc-3.3.7-x86_linux-1.tgz
+
+\bye

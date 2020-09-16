@@ -1,0 +1,21 @@
+#!/bin/sh
+# Start/stop/restart the OpenLDAP server:
+
+case $1 in
+  start)
+    echo "Starting OpenLDAP..."
+    /usr/libexec/slapd &
+    ;;
+  restart)
+    echo "Stopping OpenLDAP..."
+    killall slapd
+    echo "Starting OpenLDAP..."
+    /usr/libexec/slapd &
+    ;;
+  stop)
+    echo "Stopping OpenLDAP..."
+    killall slapd
+    ;;
+  *)
+    echo "usage $0 start|stop|restart"
+esac

@@ -1,0 +1,14 @@
+
+/--/
+
+tar xvfz /mnt/package/linux/cle/chinese-syspatch-8.1-i386-4.tgz \
+  etc/X11/xinput \
+  usr/X11R6/lib/X11/locale/locale.alias \
+  usr/X11R6/lib/X11/locale/locale.dir \
+  usr/X11R6/lib/X11/locale/zh/XLC_LOCALE \
+  usr/lib/locale/zh_CN.GB2312 \
+  usr/lib/locale/zh_TW.Big5
+
+makepkg chinese-syspatch-8.1-hata-noarch-1.tgz
+
+\bye

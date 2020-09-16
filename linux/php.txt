@@ -1,0 +1,84 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --prefix=/usr \
+  --with-config-file-path=/etc/php \
+  --with-apxs2=/usr/bin/apxs \
+  --with-openssl --with-ldap --with-pgsql \
+  --with-imap --with-imap-ssl --enable-ftp --enable-sockets \
+  --with-zlib --with-bz2 --with-zip \
+  --with-jpeg-dir --with-png-dir --with-tiff-dir \
+  --with-gd --enable-gd-native-ttf --with-freetype-dir \
+  --with-ming \
+  --enable-wddx --with-expat-dir=/usr --with-xmlrpc \
+  --with-iconv --enable-xslt --with-xslt-sablot \
+  --with-dom --with-dom-xslt --with-dom-exslt  \
+  --enable-mbstring=all --enable-mbregex --enable-zend-multibyte \
+  --enable-bcmath --enable-calendar \
+  --enable-memory-limit --enable-safe-mode
+
+#-lstdc++
+mv Makefile Makefile.ORIGIN
+sed 's/\(^EXTRA_LIBS.*\)/\1 -lstdc++/' Makefile.ORIGIN > Makefile
+
+make
+
+mkdir -p /usr/src/BUILD/etc/apache
+cp /etc/apache/httpd.conf /usr/src/BUILD/etc/apache
+
+installwatch -o t.log make install INSTALL_ROOT=/usr/src/BUILD
+
+rm -r /usr/src/BUILD/etc/apache
+
+mkdir -p /usr/src/BUILD/etc/php
+cp php.ini-dist /usr/src/BUILD/etc/php/php.ini
+cp php.ini-dist /usr/src/BUILD/etc/php
+cp php.ini-recommended /usr/src/BUILD/etc/php
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg php-4.3.3-9.0-i586-1.tgz
+
+/**/
+
+cat << HERE >> /etc/apache/httpd.conf
+
+
+## My Config ##
+
+#User nobody
+#Group nogroup
+
+AddDefaultCharset Off
+
+DirectoryIndex index.php index.html index.html.var index.cgi
+
+LoadModule php4_module extramodules/libphp4.so
+AddType application/x-httpd-php .php
+
+NameVirtualHost *
+<VirtualHost *>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /mnt/www/localhost
+    ServerName localhost
+    ErrorLog /var/log/apache2/localhost-error_log
+    CustomLog /var/log/apache2/localhost-access_log common
+</VirtualHost>
+
+HERE
+
+/**/
+
+USE="apache2 bzlib cpdflib curl ftp gd gd-external iconv imap ming mssql
+odbc snmp tiff wddxxmlrpc xsl " emerge -bv php mod_php
+
+.htaccess
+php_flag register_globals off
+php_flag magic_quotes_gpc off
+DirectoryIndex index.html index.htm index.php
+AddType application/x-httpd-php .html .htm
+php_value auto_prepend_file /.../refer.php
+php_value default_charset utf-8
+
+error_reporting  =  E_ALL & ~E_NOTIC
+
+\bye

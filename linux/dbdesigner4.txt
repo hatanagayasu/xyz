@@ -1,0 +1,4 @@
+x11-libs/kylixlibs3-borqt
+set password for 'mysql'@'localhost' = old_password('mysql');
+
+\bye

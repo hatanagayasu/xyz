@@ -1,0 +1,22 @@
+
+中文(繁體)
+安裝Ubuntu(I)
+中文(繁體)
+Asia Taipei
+USA
+使用整個磁碟
+jack
+jack
+密碼
+Uxx
+安裝
+
+登入
+應用程式->附屬應用程式->終端機
+sudo passwd
+su -
+
+
+apt-get install x11vnc netcat6 skype
+
+\bye

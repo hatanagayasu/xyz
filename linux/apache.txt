@@ -1,0 +1,49 @@
+cp ~hata/work/xyz/config.layout config.layout
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --enable-modules=all --enable-mods-shared=all \
+  --enable-proxy --enable-proxy-connect --enable-proxy-ftp --enable-proxy-http \
+  --enable-ssl --enable-so
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+mkdir -p /usr/src/BUILD/var/log/apache
+cp ~hata/work/xyz/rc.httpd /usr/src/BUILD/etc/rc.d
+#mkdir -p /usr/src/BUILD/etc/logrotate.d
+#cp ~hata/work/xyz/apache /usr/src/BUILD/etc/logrotate.d
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg httpd-2.0.47-9.0-i586-1.tgz
+
+/**/
+
+mkdir -p /etc/apache/ssl.key
+cd /etc/apache/ssl.key
+cp /etc/postfix/ssl/server.key .
+chmod 400 server.key
+
+mkdir -p /etc/apache/ssl.crt
+cd /etc/apache/ssl.crt
+cp /etc/postfix/ssl/server.crt .
+
+/**/
+
+<link rel="icon" href="icon.png" type="image/png">
+<link rel="shortcut icon" href="favicon.ico">
+
+#Far Future Expires Header
+<FilesMatch "\.(gif|png|jpg|js|css|swf)$">
+    ExpiresActive On
+    ExpiresDefault "access plus 10 years"
+</FilesMatch>
+
+#Rules for Versioned Static Files
+RewriteRule ^(scripts|css)/(.+)\.(.+)\.(js|css)$ $1/$2.$4 [L]
+
+MaxKeepAliveRequests
+
+\bye

@@ -1,0 +1,24 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr \
+  --with-pam --enable-login \
+  --with-openssl --with-ldap
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+#mkdir -p /usr/src/BUILD/usr/lib
+#ln -s /usr/local/lib/sasl2 /usr/src/BUILD/usr/lib
+#for f in `find /usr/src/BUILD/usr/local/lib -name libsasl2*`; do \
+# ln -s ${f#/usr/src/BUILD} /usr/src/BUILD/usr/lib; \
+#done
+
+mkdir -p /usr/src/BUILD/var/state/saslauthd
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+cp ~hata/work/xyz/rc.saslauthd /usr/src/BUILD/etc/rc.d
+
+chgrp bin /usr/src/BUILD/usr/sbin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg cyrus-sasl-2.1.15-i586-9.0-1.tgz
+
+\bye

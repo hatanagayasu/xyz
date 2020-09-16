@@ -1,0 +1,12 @@
+__i586 do
+make
+
+installwatch -o t.log make install BUILD_ROOT=/usr/src/BUILD/usr/local \
+  MANDIR=man 
+
+chgrp bin /usr/src/BUILD/usr/local/sbin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+makepkg ipvsadm-1.21-9.0-i586-2.tgz
+
+\bye

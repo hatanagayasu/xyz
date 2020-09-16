@@ -1,0 +1,13 @@
+patch -p 0 < /mnt/tarball/ha/patch.all
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr/local/mpich
+make
+
+installwatch -o t.log make install
+__log t.log install
+
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg mpich-1.2.5-9.0-i586-2
+
+\bye

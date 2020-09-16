@@ -1,0 +1,78 @@
+groupadd -g 31 clamav
+useradd -u 31 -g 31 -s /bin/false -c clamav -d /dev/null clamav
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr \
+  --sysconfdir=/etc --with-dbdir=/var/lib/clamav
+make
+
+installwatch -o t.log make install
+
+/usr/bin/freshclam
+
+__log t.log install
+
+mkdir -p /usr/src/BUILD/install
+cat << HERE > /usr/src/BUILD/install/doinst.sh
+#!/bin/sh
+# Add User clamav and Group clamav:
+if groupadd -g 31 clamav; then
+  true
+else
+  groupadd clamav
+fi
+if useradd -u 31 -g clamav -s /bin/false -c clamav -d /dev/null clamav; then
+  true
+else
+  useradd -g clamav -s /bin/false -c clamav -d /dev/null clamav
+fi
+
+HERE
+
+mkdir -p /usr/src/BUILD/var/log
+touch /usr/src/BUILD/var/log/clam-update.log
+chmod 644 /usr/src/BUILD/var/log/clam-update.log
+chown clamav /usr/src/BUILD/var/log/clam-update.log
+
+mkdir -p /usr/src/BUILD/etc/cron.daily
+cp ~hata/work/xyz/freshclam.sh /usr/src/BUILD/etc/cron.daily/freshclam
+
+chgrp bin /usr/src/BUILD/usr/bin/
+chgrp bin /usr/src/BUILD/usr/sbin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+makepkg clamav-0.60-i586-1.tgz
+
+/**/
+
+clamdmail:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr \
+  --sysconfdir=/etc
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+chown nobody.nogroup /usr/src/BUILD/usr/bin/clamdmail
+chmod 2511 /usr/src/BUILD/usr/bin/clamdmail
+
+mkdir -p /usr/src/BUILD/var/lib/clamdmail
+chown nobody.nogroup /usr/src/BUILD/var/lib/clamdmail
+chmod 770 /usr/src/BUILD/var/lib/clamdmail
+
+makepkg clamdmail-0.12-9.0-i586-1.tgz
+
+/**/
+
+/etc/postfix/mail.cf:
+
+mailbox_command = /usr/bin/clamdmail --admin root --mta=/bin/false
+  --quar=/var/lib/clamdmail | /usr/bin/procmail -d "$USER"
+mailbox_command = /usr/bin/clamdmail --admin root --mta=/bin/false
+  --quar=/var/lib/clamdmail | /usr/bin/dspam -d "$USER"  
+
+/etc/procmailrc:
+DEFAULT=$HOME/Maildir/
+\bye

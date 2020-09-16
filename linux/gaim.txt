@@ -1,0 +1,15 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr 
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+perl and man
+
+makepkg gaim-0.71-9.0-i586-1.tgz
+
+sed -i -e '/buddy_icon/d' -e '/icon_checksum/d' -e '/last_seen/d' .gaim/blist.xml
+
+\bye

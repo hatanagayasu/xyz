@@ -1,0 +1,10 @@
+./configure --enable-shared
+make CFLAGS="-march=i586"
+
+sudo installwatch -o t.log make install prefix=/usr/src/BUILD/usr/local
+
+/--/
+
+makepkg krb5-1.2.6-hata-i586-1.tgz
+
+\bye

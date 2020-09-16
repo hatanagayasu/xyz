@@ -1,0 +1,22 @@
+=head2 Wed Jan 29 12:06:51 2003: C<Module> L<Gimp|Gimp>
+
+=over 4
+
+=item *
+
+C<installed into: /usr/lib/perl5/site_perl/5.8.0>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.211>
+
+=item *
+
+C<EXE_FILES: gimpdoc xcftopnm embedxpm>
+
+=back
+

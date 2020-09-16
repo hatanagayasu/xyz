@@ -1,0 +1,153 @@
+HERMES:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+makepkg hermes-1.3.2-9.0-i586-1.tgz
+
+/**/
+
+LIBPROPLIST:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+makepkg libproplist-0.10.1-9.0-i586-1.tgz
+
+/**/
+
+LIBDOCKAPP:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+makepkg libdockapp-0.4.0-9.0-i586-1.tgz
+
+/**/
+
+ALLIN1:
+
+cd src
+mv Makefile Makefile.ORIGIN
+sed 's/CFLAGS = /& -march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+make
+
+mkdir -p /usr/src/BUILD/usr/bin
+chgrp bin /usr/src/BUILD/usr/bin
+cp allin1 /usr/src/BUILD/usr/bin
+
+/**/
+
+MIXER.APP:
+
+mv Makefile Makefile.ORIGIN
+sed 's/CXXFLAGS += /& -march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+make
+
+cp Mixer.app /usr/local/bin/Mixer
+
+/**/
+
+WMCALCLOCK:
+
+cd Src
+mv Makefile Makefile.ORIGIN
+sed 's/CFLAGS = /& -march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+make
+
+cp wmCalClock /usr/local/bin
+
+/**/
+
+WMND:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install
+__log t.log install
+
+/**/
+
+WINDOWMAKER:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr --enable-sound
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+mkdir -p /usr/src/BUILD/etc/X11/xinit
+cp ~hata/work/xyz/xinitrc.wmaker /usr/src/BUILD/etc/X11/xinit
+
+WindowMaker-extra:
+
+./configure -prefix=/usr
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg windowmaker-0.80.2-9.0-i586-1.tgz
+
+/**/
+
+WSOUNDSERVER:
+
+patch -p 0 < ~hata/work/xyz/WSoundServer-0.4.1-info.c.patch
+DAInitialize
+./configure -prefix=/usr --enable-esd
+make CFLAGS="-march=i586 -mcpu=i586"
+WANT_AUTOCONF="2.5" make
+
+rm libtool
+ln -s /usr/bin/libtool .
+make CFLAGS="-march=i586 -mcpu=i586"
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+/--/
+
+rpm2cpio /mnt/tarball/wm/WSoundServer-data-0.4.0-2.rhl6.i386.rpm | \
+  cpio -idmv
+
+chown root:root . -R
+find . -type d -exec chmod 755 {} \;
+
+chgrp bin /usr/src/BUILD/usr/bin
+find . -type f -perm +111 -exec strip {} \;
+
+makepkg wsoundserver-0.4.1-9.0-i586-1.tgz
+
+/**/
+
+WSOUNDPREFS:
+
+xmkmf -a
+make CDEBUGFLAGS="-march=i586 -mcpu=i586"
+
+installwatch -o t.log make install
+__log t.log install
+
+mkdir -p /usr/src/BUILD/usr/local/bin
+cat << HERE > /usr/src/BUILD/usr/local/bin/WSoundPrefs
+#!/bin/sh
+
+cd /usr/local/GNUstep/Apps/WSoundPrefs.app
+esddsp ./WSoundPrefs
+
+HERE
+chmod a+x /usr/src/BUILD/usr/local/bin/WSoundPrefs
+
+chgrp bin usr/local/bin/
+find . -type f -perm +111 -exec strip {} \;
+
+makepkg wsoundprefs-1.1.2-9.0-i586-2.tgz
+
+
+\bye

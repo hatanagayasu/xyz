@@ -1,0 +1,19 @@
+\screen_dpi 100
+\screen_font_roman "-*-times new roman"
+\screen_font_sans "-*-arial"
+\screen_font_typewriter "-*-courier new"
+\language_package "\usepackage{CJK,pslatex}"
+\language_command_begin "\begin{CJK*}{Bg5}{bsmi00lp}"
+\language_command_end "\end{CJK*}"
+\language_auto_begin false
+\language_auto_end false
+\mark_foreign_language false
+\screen_font_i18n1_encoding "big5-0"
+\screen_font_i18n1_normal "-*-ar pl mingti2l big5"
+\screen_font_i18n1_gothic "-*-ar pl mingti2l big5"
+\screen_font_i18n2_encoding "big5-0"
+\screen_font_i18n2_normal "-*-ar pl kaitim big5"
+\screen_font_i18n2_gothic "-*-ar pl kaitim big5"
+\converter latex dvi "bg5latex $$i" "latex"
+#\converter dvi pdf "dvipdfm $$i" ""
+#\font_encoding default

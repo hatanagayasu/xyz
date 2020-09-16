@@ -1,0 +1,113 @@
+swftool:
+
+CPPFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install dis=/usr/src/BUILD
+__log t.log install
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg swftools-0.4.4-9.0-i586-1.tgz
+
+/**/
+
+t1utils:
+
+./configure
+make CPPFLAGS="-march=i586 -mcpu=i586" --prefix=/usr
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg t1utils-1.27-i586-1.tgz
+
+/**/
+
+ttf2pt1:
+
+mv Makefile Makefile.ORIGIN
+sed -e 's/^CFLAGS_SYS= -O/& -march=i586 -mcpu=i586/' \
+  -e 's/^#CFLAGS_FT/CFLAGS_FT/' \
+  -e 's/^#LIBS_FT/LIBS_FT/' \
+  -e 's/^all:.*/all:	t1asm ttf2pt1 mans/' \
+  -e 's/local\///g' \
+  Makefile.ORIGIN > Makefile
+make all
+installwatch -o t.log make install INSTDIR=/usr/src/BUILD/usr
+
+chown root.root /usr/src/BUILD -R
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg ttf2pt1-3.4.3-i586-1.tgz
+
+/**/
+
+ttf2pt1-chinese:
+
+installwatch -o t.log make install INSTDIR=/usr
+__log t.log install
+
+makepkg ttf2pt1-chinese-3.4.0-noarch-1.tgz
+
+/**/
+
+#dvipdfm:
+
+#CFLAGS="-march=i586 -mcpu=i586" ./configure \
+#  --prefix=/usr/share/texmf --datadir=/usr/share \
+#  --with-kpathsea=/usr/share/texmf
+#make
+#installwatch -o t.log make install
+#__log t.log install
+
+#find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+#makepkg dvipdfm-0.13.2c-i586-2.tgz
+
+/**/
+
+dvipdfmx:
+
+patch -p 0 < ~hata/work/xyz/dvipdfmx-20021128.patch
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --prefix=/usr/share/texmf --datadir=/usr/share \
+  --with-kpathsea=/usr/share/texmf \
+  --with-openssl
+make
+installwatch -o t.log make install
+__log t.log install
+
+ln -s /usr/local/Acrobat5/Resource/Font/* /usr/src/BUILD/usr/share/texmf/dvipdfm/CMap 
+rm /usr/src/BUILD/usr/share/texmf/dvipdfm/CMap/*.otf 
+tar xvfz /mnt/tarball/tex/dvipdfmx-map.tar.gz \
+  -C /usr/src/BUILD/usr/share/texmf/dvipdfm/config
+chown root.root /usr/src/BUILD/usr/share/texmf/dvipdfm/config/*
+cp /mnt/tarball/tex/Big5.sfd /usr/src/BUILD/usr/share/texmf/dvipdfm/config
+cp /mnt/tarball/tex/dvipdfmx.cfg /usr/src/BUILD/usr/share/texmf/dvipdfm/config
+
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg dvipdfmx-20030313-i586-1.tgz
+
+/**/
+
+xpdf-chinese-traditional:
+
+tar xvfz /mnt/tarball/tex/xpdf-chinese-traditional.tar.gz
+chown -R root:root xpdf-chinese-traditional
+mkdir -p usr/share/xpdf
+mv xpdf-chinese-traditional usr/share/xpdf/chinese-traditional
+cp -a --parents /usr/X11R6/etc/xpdfrc .
+cat usr/share/xpdf/chinese-traditional/add-to-xpdfrc >> usr/X11R6/etc/xpdfrc
+rm usr/share/xpdf/chinese-traditional/add-to-xpdfrc
+mv usr/X11R6/etc/xpdfrc xpdfrc
+sed 's/\/usr\/local\/share/\/usr\/share/g' xpdfrc > usr/X11R6/etc/xpdfrc
+rm xpdfrc
+
+makepkg xpdf-chinese-traditional-noarch-3.tgz
+
+\bye

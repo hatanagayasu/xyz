@@ -1,0 +1,42 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib \
+  --without-cyrus-sasl
+
+make depend
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+cp ~hata/work/xyz/rc.ldap /usr/src/BUILD/etc/rc.d
+
+chgrp bin /usr/src/BUILD/usr/bin
+chgrp bin /usr/src/BUILD/usr/sbin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg openldap-2.1.22-9.0-i586-1.tgz
+
+/**/
+
+sudo /etc/init.d/slapd stop
+
+sudo vim /etc/ldap/slapd.d/cn\=config/olcDatabase\=\{1\}hdb.ldif
+
+
+#Add new lines (after the one with olcDbIndex: objectClass eq in it) for the missing indexes. Eg.:
+
+olcDbIndex: cn eq
+olcDbIndex: gidNumber eq
+olcDbIndex: memberUid eq
+olcDbIndex: uid eq
+olcDbIndex: uidNumber eq
+olcDbIndex: uniqueMember eq
+
+#Run the OpenLDAP indexer for your configuration:
+
+sudo -u openldap slapindex -F /etc/ldap/slapd.d/
+
+#Start the LDAP server:
+sudo /etc/init.d/slapd start
+
+\bye

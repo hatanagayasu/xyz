@@ -1,0 +1,105 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr \
+  --enable-alternative-bayesian \
+  --with-userdir=/var/lib/dspam \
+  --with-userdir-owner=nobody \
+  --with-userdir-group=nogroup \
+  --with-dspam-owner=nobody \
+  --with-dspam-group=nogroup \
+  --with-storage-driver=libdb4_drv
+#--with-local-delivery-agent="/path/to/lda -d \$u"  
+#--enable-chi-square
+#--enable-test-conditional
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+chmod 2511 /usr/src/BUILD/usr/bin/dspam
+
+mkdir -p /usr/src/BUILD/etc/cron.weekly
+ln -s /usr/bin/dspam_clean /usr/src/BUILD/etc/cron.weekly
+ln -s /usr/bin/dspam_purge /usr/src/BUILD/etc/cron.weekly
+
+makepkg dspam-2.6.5.2-9.0-i586-1.tgz
+makepkg dspam-2.7.0-9.0-i586-1.tgz
+makepkg dspam-2.7.6.10-9.0-i586-1.tgz
+
+/--/
+
+/etc/postfix/main.cf:
+    virtual_alias_maps = regexp:/etc/postfix/virtual_alias_maps
+    recipient_delimiter = +
+
+/etc/postfix/virtual_alias_maps:
+/([^+]+)(\+[^@]+)?@my\.domain\.tld$/   "|/usr/local/bin/dspam -d $1 --addspam"
+
+
+smtp      inet  n       -       n       -       -       smtpd
+  -o content_filter=dspam:
+dspam     unix  -       n       n       -       -       pipe
+  flags=Rq user=mail argv=/usr/bin/dspam -d ${user}
+
+/--/
+
+/usr/local/bin/addspam:
+
+#!/bin/sh
+
+die() {
+  echo `date "+%b%d %H:%M:%S"` "$*" >&2
+  exit 1
+}
+
+exec >>/var/log/addspam 2>&1 # precreate
+
+read from || die "No input"
+set - $from
+envfrom="$2"
+IFS="@"
+set - $envfrom
+user="$1"
+domain="$2"
+[ "$domain" = "yourdomain.com" ] || die "Invalid source domain"
+echo dspam -d $user --addspam
+/usr/local/bin/dspam -d $user --addspam || die "DSPAM error"
+
+
+/**/
+
+./configure --prefix=/usr --host=i586-pc-linux-gnu --mandir=/usr/share/man
+--infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc
+--localstatedir=/var/lib --with-signature-life=14
+--enable-source-address-tracking --enable-large-scale --enable-long-username
+--enable-spam-subject --enable-signature-headers --enable-whitelist
+--with-dspam-home=/etc/mail/dspam --with-dspam-mode=4755
+--with-dspam-owner=dspam --with-dspam-group=dspam
+--with-dspam-home-owner=dspam --with-dspam-home-group=dspam
+--with-dspam-home-mode=4755 --with-storage-driver=mysql_drv
+--with-mysql-includes=/usr/include/mysql
+--with-mysql-libraries=/usr/lib/mysql --with-client-compression
+--enable-virtual-users --with-delivery-agent=/usr/bin/procmail
+
+CFLAGS="-Os -march=i586" ./configure --prefix=/usr \
+  --host=i586-pc-linux-gnu \
+  --mandir=/usr/share/man \
+  --infodir=/usr/share/info \
+  --sysconfdir=/etc \
+  --localstatedir=/var/lib \
+  --enable-long-username \
+  --with-dspam-mode=4755 \
+  --with-dspam-owner=dspam \
+  --with-dspam-group=dspam \
+  --with-storage-driver=mysql_drv \
+  --with-mysql-includes=/usr/include/mysql \
+  --enable-virtual-users
+
+trainingMode=TEFT|TOE|TUM|notrain
+spamAction=quarantine|tag|deliver
+spamSubject=[SPAM]
+statisticalSedation=5|[0-4]|[6-10]
+enableBNR=on|off
+enableWhitelist=on|off
+signatureLocation=message|headers
+
+\bye

@@ -1,0 +1,28 @@
+
+user_pref("print.postscript.nativecode.zh-CN", "gb2312");
+user_pref("print.postscript.nativecode.zh-TW", "big5");
+user_pref("print.postscript.nativefont.zh-CN", "BousungEG-Light-GB-GB-EUC-H");
+user_pref("print.postscript.nativefont.zh-TW", "ShanHeiSun-Light-ETen-B5-H");
+
+print.postscript.nativecode.zh-CN=gb2312
+print.postscript.nativecode.zh-TW=big5
+print.postscript.nativefont.zh-CN=BousungEG-Light-GB-GB-EUC-H
+print.postscript.nativefont.zh-TW=ShanHeiSun-Light-ETen-B5-H
+
+font.FreeType2.enable
+font.FreeType2.printing
+font.directory.truetype.1
+font.directory.truetype.2
+
+
+/**/
+
+firefox
+./configure --prefix=/usr --host=i586-pc-linux-gnu --mandir=/usr/share/man --infodir=/usr/share/info --datadir=/usr/share --sysconfdir=/etc --localstatedir=/var/lib --enable-optimize=-O2 --enable-old-abi-compat-wrappers --disable-activex --disable-activex-scripting --disable-installer --disable-pedantic --enable-crypto --enable-xterm-updates --with-pthreads --with-system-jpeg --with-system-png --with-system-zlib --with-x --without-system-nspr --enable-default-toolkit=gtk2 --disable-ipv6 --disable-xinerama --disable-xprint --disable-gnomevfs --disable-freetype2 --disable-freetypetest --disable-debug --disable-tests --enable-reorder --enable-strip --enable-strip-libs --enable-elf-dynstr-gc --enable-xft --disable-jsd --disable-xpctools --enable-oji --enable-mathml --enable-single-profile --enable-extensions=cookie,inspector,negotiateauth,pref,transformiix,universalchardet,webservices,xmlextras,xml-rpc --disable-mailnews --disable-composer --disable-ldap --disable-profilesharing --with-default-mozilla-five-home=/usr/lib/MozillaFirefox --enable-single-profile
+
+--prefix=/app/firefox --disable-mailnews --disable-ldap --disable-freetype2
+--disable-xprint --disable-gnomevfs --disable-xinerama --disable-composer
+
+firefox -remote "openUrl(%s)"
+
+\bye

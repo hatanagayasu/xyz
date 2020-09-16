@@ -1,0 +1,37 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr \
+  --with-pam --sysconfdir=/etc/ssh
+make
+
+installwatch -o t.log make install-nokeys DESTDIR=/usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/etc/pam.d
+cp ~hata/work/xyz/sshd /usr/src/BUILD/etc/pam.d
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+cp ~hata/work/xyz/rc.sshd /usr/src/BUILD/etc/rc.d
+
+chgrp bin /usr/src/BUILD/usr/bin/
+chgrp bin /usr/src/BUILD/usr/sbin/
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg openssh-3.7.1p2-9.0-i586-1.tgz
+
+/--/
+
+cd ~/.ssh
+ssh-keygen -t rsa
+
+scp id_rsa.pub root@ms1.iSee.com.tw:~/.ssh/id_rsa.pub.tmp
+
+ssh root@ms1.iSee.com.tw 'cat ~/.ssh/id_rsa.pub.tmp >> ~/.ssh/authorized_keys'
+
+ssh root@ms1.iSee.com.tw 'rm ~/.ssh/id_rsa.pub.tmp'
+
+ssh-copy-id
+
+/**/
+
+su - hata -c 'autossh -M 2222 -N -f -R 4282:localhost:22 xyz@ms.isee.com.tw' &
+ssh -p 4282 -D 1080 hata@ms.isee.com.tw
+
+\bye

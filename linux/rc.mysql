@@ -1,0 +1,17 @@
+#!/bin/sh
+# Start/stop/restart the MySQL server:
+
+case $1 in
+  start)
+    /usr/bin/mysqld_safe &
+    ;;
+  restart)
+    /usr/bin/mysqladmin -u root shutdown
+    /usr/bin/mysqld_safe &
+    ;;
+  stop)
+    /usr/bin/mysqladmin -u root shutdown
+    ;;
+  *)
+    echo "usage $0 start|stop|restart"
+esac

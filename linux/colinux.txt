@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colinux>
+    <block_device index="0" path="\DosDevices\D:\coLinux\root.fs" enabled="true" />
+    <block_device index="1" path="\DosDevices\D:\coLinux\swap.fs" enabled="true" />
+    <block_device index="2" path="\DosDevices\D:\coLinux\sarge-i386-businesscard.iso" enabled="true" />
+    <block_device index="3" path="\DosDevices\D:\coLinux\initrd" enabled="true" />
+    <bootparams>root=/dev/cobd3</bootparams>
+    <image path="vmlinux" />
+    <memory size="128" />
+    <network index="0" type="bridged" name="Local" />
+</colinux>
+
+"C:\Program Files\coLinux\colinux-daemon.exe" -c Preinstall_debian.xml -t nt
+
+<?xml version="1.0" encoding="UTF-8"?>
+<colinux>
+    <block_device index="0" path="\DosDevices\D:\coLinux\root.fs" enabled="true" />
+    <block_device index="1" path="\DosDevices\D:\coLinux\swap.fs" enabled="true" />
+    <block_device index="2" path="\DosDevices\D:\coLinux\sarge-i386-businesscard.iso" enabled="true" />
+    <block_device index="3" path="\DosDevices\D:\coLinux\initrd" enabled="true" />
+    <bootparams>root=/dev/cobd0</bootparams>
+    <image path="vmlinux" />
+    <memory size="128" />
+    <network index="0" type="bridged" name="Local" />
+</colinux>
+
+\bye

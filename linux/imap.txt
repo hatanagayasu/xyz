@@ -1,0 +1,21 @@
+make slx SSLTYPE=unix SSLDIR=/usr \
+  EXTRACFLAGS="-march=i586 -mcpu=i586"
+
+mkdir -p /usr/src/BUILD/usr/lib
+mkdir -p /usr/src/BUILD/usr/include
+cp c-client/c-client.a /usr/src/BUILD/usr/lib/libc-client.a
+cp c-client/rfc822.h /usr/src/BUILD/usr/include
+cp c-client/mail.h /usr/src/BUILD/usr/include
+cp c-client/linkage.h /usr/src/BUILD/usr/include
+
+mkdir -p /usr/src/BUILD/usr/sbin
+cp ipopd/ipop2d /usr/src/BUILD/usr/sbin
+cp ipopd/ipop3d /usr/src/BUILD/usr/sbin
+cp imapd/imapd /usr/src/BUILD/usr/sbin
+
+chgrp bin /usr/src/BUILD/usr/sbin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg imap-2002d-9.0-i586-1.tgz
+
+\bye

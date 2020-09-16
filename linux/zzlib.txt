@@ -1,0 +1,11 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg zziplib-0.10.82-9.0-i586-1.tgz
+
+\bye

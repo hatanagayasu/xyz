@@ -1,0 +1,10 @@
+webapp-config -I -h localhost -d phpmyadmin phpmyadmin 2.6.2-r1
+
+webapp-config -I -u apache -g apache -h localhost \
+  -d phpmyadmin phpmyadmin 2.6.2-r1
+webapp-config -C -h localhost -d phpmyadmin
+webapp-config -I -u apache -g apache -h localhost \
+  -d bugzilla bugzilla
+webapp-config -I -u apache -g apache -h localhost \
+  -d horde/turba horde-turba 1.2.4
+\bye

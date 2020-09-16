@@ -1,0 +1,29 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --sysconfdir=/etc --localstatedir=/var
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg opensp-1.5-9.0-i586-1.tgz
+
+/**/
+
+./configure --sysconfdir=/etc --localstatedir=/var
+
+mv Makefile.comm Makefile.comm.ORIGIN
+sed 's/CXXFLAGS=-O2 /&-march=i586 -mcpu=i586 /' Makefile.comm.ORIGIN > \
+  Makefile.comm
+
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg openjade-1.3.2-9.0-i586-1.tgz
+
+\bye

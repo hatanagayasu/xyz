@@ -1,0 +1,12 @@
+bugzilla:
+
+perl -pi -e \
+  's@#\!/usr/bonsaitools/bin/perl@#\!/usr/bin/perl@' *cgi *pl Bug.pm \
+  processmail syncshadowdb
+
+CREATE DATABASE bugs;  
+GRANT SELECT,INSERT,UPDATE,DELETE,INDEX, ALTER,CREATE,DROP,REFERENCES \
+  ON bugs.* TO bugs@localhost IDENTIFIED BY 'bugs1234';
+FLUSH PRIVILEGES;
+    
+\bye

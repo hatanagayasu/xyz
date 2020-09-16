@@ -1,0 +1,106 @@
+patch -p 0 < smrsh-20020924.patch
+patch -p 0 < /mnt/package/linux/sendmail/proto.m4.8.649.2.14
+
+cd devtools/Site
+cat > site.config.mc
+PREPENDDEF(`confMAPDEF', `-DMAP_REGEX')dnl
+PREPENDDEF(`confOPTIMIZE', `-O6 -march=i586')dnl
+APPENDDEF(`confENVDEF', `-DTCPWRAPPERS -DSASL=2 -DSTARTTLS -DMILTER')
+APPENDDEF(`conf_sendmail_LIBS', `-lwrap -lsasl2 -lssl -lcrypto')
+APPENDDEF(`confLIBDIRS', `-L/usr/local/lib -L/usr/local/ssl/lib')
+APPENDDEF(`confINCDIRS', `-I/usr/local/include/sasl -I/usr/local/ssl/include')
+^D
+
+cd ../../sendmail
+./Build -c -f ../devtools/Site/site.config.mc
+
+cd ../cf/cf
+cp generic-linux.mc sendmail.mc
+cat ../feature/access_db.m4 >> sendmail.mc
+cat ../feature/delay_checks.m4 >> sendmail.mc
+cat ../feature/virtusertable.m4 >> sendmail.mc
+cat >> sendmail.mc
+TRUST_AUTH_MECH(`DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+define(`confAUTH_MECHANISMS', `DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
+define(`CERT_DIR', `/etc/mail/cert')dnl
+define(`confCACERT_PATH', `CERT_DIR')dnl
+define(`confCACERT', `CERT_DIR/cacert')dnl
+define(`confSERVER_CERT', `CERT_DIR/server.cert')dnl
+define(`confSERVER_KEY', `CERT_DIR/server.key')dnl
+define(`confCLIENT_CERT', `CERT_DIR/client.cert')dnl
+define(`confCLIENT_KEY', `CERT_DIR/client.key')dnl
+define(`_FFR_MILTER')dnl
+INPUT_MAIL_FILTER(`sample', `S=local:/var/run/filter.sock')dnl
+^D
+
+./Build sendmail.cf
+
+mkdir -p /etc/mail
+cp sendmail.cf /etc/mail
+
+cd ../..
+./Build
+
+cp -r cf /etc/mail
+
+installwatch -o t.log ./Build install
+
+mkdir -p /var/spool/clientmqueue
+chown smmsp.smmsp /var/spool/clientmqueue
+chmod 770 /var/spool/clientmqueue
+mkdir -p /var/spool/mqueue
+touch /etc/mail/local-host-names
+touch /etc/mail/access
+makemap -r hash /etc/mail/access.db < /etc/mail/access
+touch /etc/mail/virtusertable
+makemap -r hash /etc/mail/virtusertable.db < /etc/mail/virtusertable
+mkdir /var/spool/mail.backup
+chmod 700 /var/spool/mail.backup
+
+cp aliases.new /etc/mail/aliases
+newaliases
+
+__zip t.log | xargs zip -gy sendmail-8.12.7-i586-1.zip
+
+zip -gry sendmail-8.12.7-i586-1.zip /etc/mail
+zip -gry sendmail-8.12.7-i586-1.zip /var/spool/clientmqueue
+zip -gy sendmail-8.12.7-i586-1.zip /var/spool/mail.backup
+zip -gy sendmail-8.12.7-i586-1.zip /var/spool/mqueue
+
+cp rc.sendmail /etc/rc.d
+zip -gy sendmail-8.12.7-i586-1.zip /etc/rc.d/rc.sendmail
+
+gcc -O6 -march=i586 -I../include -o filter filter.c \
+  ../obj.Linux.2.4.18.i686/libmilter/libmilter.a \
+  ../obj.Linux.2.4.18.i686/libsm/libsm.a -pthread
+chmod 700 filter
+mv filter /usr/sbin
+
+zip -gy sendmail-8.12.7-i586-1.zip /usr/sbin/filter
+
+/--/
+
+sendmail -O Loglevel=20 -bs -Am
+ehlo localhost
+quit
+
+/--/
+
+mkdir -p /etc/mail/cert
+cd /etc/mail/cert
+
+/usr/local/ssl/bin/openssl genrsa -des3 -out server.key 1024
+/usr/local/ssl/bin/openssl req -new -x509 -days 3650 \
+  -key server.key -out server.cert
+
+mv server.key server.key.ORIGIN
+/usr/local/ssl/bin/openssl rsa -in server.key.ORIGIN -out server.key
+chmod 400 server.key
+
+ln -s server.cert cacert
+ln -s server.key client.key
+ln -s server.cert client.cert
+
+dnl FEATURE(`accept_unresolvable_domains')dnl
+m4 sendmail.mc > sendmail.cf
+

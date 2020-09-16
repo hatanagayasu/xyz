@@ -1,0 +1,74 @@
+
+include('adodb/adodb.inc.php');
+$conn = &ADONewConnection('mysql');postgres¡Bpostgres64¡Bpostgres7
+$conn->Connect('localhost', 'piza', 'ooo123', 'test');
+$conn->PConnect('localhost', 'piza', 'ooo123', 'test');
+$sql = "insert into t values ('abcde', 18)";
+$rs = $conn->Execute($sql);
+if (!$rs) print $conn->ErrorMsg(); else print "OK!";
+$rs->Close();
+$conn->Close();
+
+adodb-session.php
+
+$conn->GetInsertSQL($rs, $r);
+$conn->GetUpdateSQL($rs, $r);
+$conn->SelectLimit("Select * from t", 3, 1);
+
+while(!$rs->EOF) 
+{
+  for($i=0, $max=$rs->FieldCount(); $i < $max; $i++) 
+  {
+    print $rs->fields[$i] . " ";
+  }
+  $rs->MoveNext();
+}
+
+$ADODB_FETCH_MODE= ADODB_FETCH_NUM;
+$ADODB_FETCH_MODE= ADODB_FETCH_ASSOC;
+
+$db->SetFetchMode(ADODB_FETCH_NUM);
+$db->SetFetchMode(ADODB_FETCH_ASSOC); 
+
+$rs->RecordCount()
+$rs->FieldCount()
+$rs->FetchRow()
+$rs->fields[]
+
+while($ar = $rs->FetchRow()) 
+{
+  print $ar['name'] ." " . $ar['year'];
+  print "<br>\n";
+}
+
+$f = $rs->FetchField(1);
+print $f->name . ":" . $f->type;
+$rs->MetaType($f->type)
+
+GLOBAL $HTTP_SESSION_VARS;
+include('adodb.inc.php');
+include('adodb-session.php');
+adodb_sess_open(false, false, false);
+session_start();
+session_register('AVAR');
+$HTTP_SESSION_VARS['AVAR'] += 1;
+print "<p>\$HTTP_SESSION_VARS['AVAR']={$HTTP_SESSION_VARS['AVAR']}</p>"
+
+
+adodb_sess_close();
+
+create table sessions 
+(
+  SESSKEY char(32) not null,
+  EXPIRY int(11) unsigned not null,
+  EXPIREREF varchar(64),
+  DATA text not null,
+  primary key (sesskey)
+);
+
+function NotifyFn($expireref, $sesskey)
+{
+}
+$ADODB_SESSION_EXPIRE_NOTIFY = array('USERID','NotifyFn');
+
+\bye

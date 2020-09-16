@@ -1,0 +1,16 @@
+chkrootkit:
+
+mv Makefile Makefile.ORIGIN
+sed 's/^CC       = gcc/& -march=i586 -mcpu=i586/' \
+  Makefile.ORIGIN > Makefile
+make
+
+mkdir -p /usr/src/BUILD/usr/bin
+find . -perm +111 -exec cp {} /usr/src/BUILD/usr/bin \;
+
+chgrp bin /usr/src/BUILD/usr/bin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+makepkg chkrootkit-0.41-9.0-i586-1.tgz
+
+\bye

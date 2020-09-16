@@ -1,0 +1,11 @@
+CPPFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg sablot-1.0-9.0-i586-1.tgz
+
+\bye

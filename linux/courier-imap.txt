@@ -1,0 +1,32 @@
+export CPPFLAGS="-march=i586 -mcpu=i586"
+./configure --prefix=/usr --sysconfdir=/etc/courier-imap \
+  --localstatedir=/var/run/courier-imap \
+  --with-authldap --with-authpgsql --with-authpam
+
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+installwatch -o s.log make install-configure DESTDIR=/usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/etc/pam.d/
+cat << HERE > /usr/src/BUILD/etc/pam.d/imap
+auth       required   pam_unix.so
+account    required   pam_unix.so
+HERE
+
+ln -sf /etc/pam.d/imap /usr/src/BUILD/etc/pam.d/pop3
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+ln -sf /usr/libexec/imapd-ssl.rc /usr/src/BUILD/etc/rc.d/rc.imapd-ssl
+ln -sf /usr/libexec/imapd.rc /usr/src/BUILD/etc/rc.d/rc.imapd
+ln -sf /usr/libexec/pop3d-ssl.rc /usr/src/BUILD/etc/rc.d/rc.pop3d-ssl
+ln -sf /usr/libexec/pop3d.rc /usr/src/BUILD/etc/rc.d/rc.pop3d
+ln -sf /usr/libexec/authlib/authdaemond /usr/src/BUILD/etc/rc.d/rc.authdaemond
+
+chgrp bin /usr/src/BUILD/usr/bin
+chgrp bin /usr/src/BUILD/usr/sbin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg courier-imap-2.1.1-9.0-i586-1.tgz
+
+\bye

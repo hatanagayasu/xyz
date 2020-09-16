@@ -1,0 +1,64 @@
+conn ms2
+        left=61.71.94.113
+        leftsourceip=192.168.78.254
+        leftsubnet=192.168.78.0/24
+        right=219.87.81.39
+        rightsourceip=192.168.2.1
+        rightsubnet=192.168.2.0/24
+        authby=secret
+        keyexchange=ike
+        ike=3des-sha1-modp1024
+        ikelifetime=3600s
+        pfs=yes
+        auth=esp
+        esp=3des-md5
+        pfsgroup=modp1024
+        keylife=3600s
+        compress=no
+        keyingtries=0
+        auto=add
+
+conn ms3
+        left=61.71.94.113
+        leftsourceip=192.168.78.254
+        leftsubnet=192.168.78.0/24
+        right=59.125.117.112
+        rightsourceip=192.168.3.1
+        rightsubnet=192.168.3.0/24
+        authby=secret
+        keyexchange=ike
+        ike=3des-sha1-modp1024
+        ikelifetime=3600s
+        pfs=yes
+        auth=esp
+        esp=3des-md5
+        pfsgroup=modp1024
+        keylife=3600s
+        compress=no
+        keyingtries=0
+        auto=add
+
+conn ms4
+        left=61.71.94.113
+        leftsourceip=192.168.78.254
+        leftsubnet=192.168.78.0/24
+        right=%any
+        rightsourceip=192.168.4.1
+        rightsubnet=192.168.4.0/24
+        authby=secret
+        keyexchange=ike
+        ike=3des-sha1-modp1024
+        ikelifetime=3600s
+        pfs=yes
+        auth=esp
+        esp=3des-md5
+        pfsgroup=modp1024
+        keylife=3600s
+        compress=no
+        keyingtries=0
+        auto=add
+
+61.71.94.113 219.87.81.39 : PSK "d41d8cd98f00b204e9800998ecf8427e"
+61.71.94.113 124.9.1.39 : PSK "d41d8cd98f00b204e9800998ecf8427e"
+61.71.94.113 59.125.117.112 : PSK "d41d8cd98f00b204e9800998ecf8427e"
+61.71.94.113 %any : PSK "d41d8cd98f00b204e9800998ecf8427e"

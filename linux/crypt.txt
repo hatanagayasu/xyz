@@ -1,0 +1,41 @@
+MHASH:
+
+CFLAGS="-march=i586" ./configure
+make
+
+sudo installwatch -o t.log make install
+sudo __log t.log install
+
+/--/
+
+makepkg mhash-0.8.17-hata-i586-1.tgz
+
+/**/
+
+LIBMCRYPT:
+
+CFLAGS="-march=i586" ./configure
+make
+
+sudo installwatch -o t.log make install
+sudo __log t.log install
+
+/--/
+
+makepkg libmcrypt-hata-2.5.6-i586-1.tgz
+
+/**/
+
+MCRYPT:
+
+CFLAGS="-march=i586" ./configure
+make
+
+sudo installwatch -o t.log make install
+sudo __log t.log install
+
+/--/
+
+makepkg mcrypt-2.6.3-hata-i586-1.tgz
+
+\bye

@@ -1,0 +1,53 @@
+
+sysctl -a | egrep "ipv4.*(accept|send)_redirects" | awk -F "=" '{print $1"=0"}' >> /etc/sysctl.conf
+
+net.ipv4.ip_forward = 1
+net.ipv4.conf.default.rp_filter = 0
+
+/**/
+
+./configure
+
+mv Makefile Makefile.ORIGIN
+sed 's/CBASE=/&-march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+
+make
+
+mkdir -p /usr/src/BUILD/usr/local/sbin
+cp vpnd /usr/src/BUILD/usr/local/sbin
+mkdir -p /usr/src/BUILD/etc
+cp vpnd.conf vpnd.chat /usr/src/BUILD/etc
+
+/--/
+
+chgrp bin usr/local/sbin/
+find . -type f -perm +111 -exec strip {} \;
+
+makepkg vpnd-1.1.0-9.0-i586-2.tgz
+
+/**/
+
+vpnd -m
+chmod 400 /etc/vpnd.key
+
+mode server
+client 61.71.4.235 10001
+server 61.71.6.129 10001
+local 192.168.1.1
+remote 192.168.2.1
+keyfile /etc/vpnd.key
+route1 192.168.2.0 255.255.255.0 192.168.2.1
+nocompress
+autoroute
+
+mode client
+client 61.71.6.129 10001
+server 61.71.4.235 10001
+local 192.168.2.1
+remote 192.168.1.1
+keyfile /etc/vpnd.key
+route1 192.168.1.0 255.255.255.0 192.168.1.1
+nocompress
+autoroute
+
+\bye

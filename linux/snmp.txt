@@ -1,0 +1,59 @@
+./configure --with-cflags="-march=i586 -mcpu=i586"
+Location to write persistent information (/var/net-snmp): /var/lib/net-snmp
+
+make
+
+installwatch -o t.log make install \
+  prefix=/usr/src/BUILD/usr/local \
+  exec_prefix=/usr/src/BUILD/usr/local \
+  persistentdir=/usr/src/BUILD/var/lib/net-snmp
+
+cp ~hata/work/xyz/snmpd.conf /usr/src/BUILD/usr/local/share/snmp
+
+chgrp bin /usr/src/BUILD/usr/local/bin/
+chgrp bin /usr/src/BUILD/usr/local/sbin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+makepkg net-snmp-5.0.8-9.0-i586-2.tgz
+
+/--/
+
+snmpconf -g basic_setup -i
+
+/**/
+
+mrtg:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr/local \
+  --with-gd --with-z --with-png
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr/local
+
+chgrp bin /usr/src/BUILD/usr/local/bin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+makepkg mrtg-2.9.29-9.0-i586-2.tgz
+
+/--/
+
+cfgmaker \
+  --global 'WorkDir: /var/lib/mrtg' \
+  --global 'Options[_]: bits,growright' \
+  --global 'Language: big5' \
+  --output /var/lib/mrtg/mrtg.cfg \
+  public@localhost
+
+indexmaker \
+  --columns=1 \
+  --output=/var/lib/mrtg/index.html \
+  --title='Traffic Info' \
+  /var/lib/mrtg/mrtg.cfg
+
+mrtg /var/lib/mrtg/mrtg.cfg
+
+cfgmaker public@localhost
+
+snmpwalk -v 1 server02 -c public | grep hrProcessorLoad
+
+\bye

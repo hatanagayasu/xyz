@@ -1,0 +1,21 @@
+#!/bin/sh
+# Start/stop/restart the saslauthd server:
+
+case $1 in
+  start)
+    echo "Starting saslauthd..."
+    /usr/sbin/saslauthd -a pam &
+    ;;
+  restart)
+    echo "Stopping saslauthd..."
+    killall saslauthd
+    echo "Starting saslauthd..."
+    /usr/sbin/saslauthd -a pam &
+    ;;
+  stop)
+    echo "Stopping saslauthd..."
+    killall saslauthd
+    ;;
+  *)
+    echo "usage $0 start|stop|restart"
+esac

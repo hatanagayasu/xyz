@@ -1,0 +1,113 @@
+KERNEL:
+
+make menuconfig
+make dep bzImage modules
+
+installwatch -o t.log make modules_install INSTALL_MOD_PATH=/usr/src/BUILD
+
+mkdir /usr/src/BUILD/boot
+cp arch/i386/boot/bzImage /usr/src/BUILD/boot/2.6.0-test3
+
+/--/
+
+#cp /usr/src/dlkfet-4.24/rhinefet.o \
+#  /usr/src/BUILD/lib/modules/2.4.20/kernel/drivers/net -i
+#cp /usr/src/qlogic/qla2200.o \
+#  /usr/src/BUILD/lib/modules/2.4.20/kernel/drivers/scsi -i
+#cp /usr/src/qlogic/qla2300.o \
+#  /usr/src/BUILD/lib/modules/2.4.20/kernel/drivers/scsi -i
+
+makepkg kernel-2.6.0-test3-9.0-i586-2.tgz
+
+/--/
+
+#alsa-driver:
+#
+#./configure --with-isapnp=yes --with-sequencer=yes --with-oss=yes \
+#  --with-cards=all
+#make
+#
+#installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+#
+#rm /usr/src/BUILD/lib/modules/2.4.20/*
+#
+#makepkg alsa-driver-0.9.8-kernel-2.4.22-9.0-i586-1.tgz
+
+/**/
+attr:
+
+./configure --prefix=/usr
+make OPTIMIZER="-march=i586 -mcpu=i586"
+
+installwatch -o t.log make install install-dev install-lib \
+  DIST_ROOT=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg attr-2.4.1-9.0-i586-1.tgz
+
+acl:
+
+./configure --prefix=/usr
+make OPTIMIZER="-march=i586 -mcpu=i586"
+
+installwatch -o t.log make install install-dev install-lib \
+  DIST_ROOT=/usr/src/BUILD
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg acl-2.2.7-9.0-i586-1.tgz
+
+/**/
+
+module-init-tools:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD \
+  bindir=/sbin mandir=/usr/man
+
+mkdir /usr/src/BUILD/etc
+cp modprobe.devfs /usr/src/BUILD/etc
+
+chgrp bin /usr/src/BUILD/sbin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+cd /usr/src/BUILD/sbin
+cp /sbin/depmod depmod.old
+cp /sbin/insmod insmod.old
+ln -s insmod.old lsmod.old
+cp /sbin/modinfo modinfo.old
+ln -s insmod.old modprobe.old
+ln -s insmod.old rmmod.old
+
+makepkg module-init-tools-0.9.12-9.0-i586-1.tgz
+
+/**/
+
+gcc -D__KERNEL__ -I/usr/src/linux-2.4.28-gentoo-r2/include -Wall \
+  -Wstrict-prototypes -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common \
+  -fomit-frame-pointer -pipe -mpreferred-stack-boundary=2 -march=i586 \
+  -DMODULE -DMODVERSIONS -include \
+  /usr/src/linux-2.4.28-gentoo-r2/include/linux/modversions.h  -nostdinc \
+  -iwithprefix include -DKBUILD_BASENAME=inode  -c -o inode.o inode.c
+gcc -D__KERNEL__ -I/usr/src/linux-2.4.28-gentoo-r2/include -Wall \
+  -Wstrict-prototypes -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common \
+  -fomit-frame-pointer -pipe -mpreferred-stack-boundary=2 -march=i586 \
+  -DMODULE -DMODVERSIONS -include \
+  /usr/src/linux-2.4.28-gentoo-r2/include/linux/modversions.h  -nostdinc \
+  -iwithprefix include -DKBUILD_BASENAME=uncompress -I \
+  /usr/src/linux-2.4.28-gentoo-r2/fs/inflate_fs -c -o uncompress.o uncompress.c
+rm -f cramfs.o
+ld -m elf_i386 -e stext  -r -o cramfs.o inode.o uncompress.o
+
+EXPORT_SYMBOL(kill_proc_info);
+
+make ME=fs/cramfs
+make -f scripts/Makefile.build obj=fs/autofs4
+install -m 444 bcm4400.o
+
+\bye

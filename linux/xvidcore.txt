@@ -1,0 +1,18 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure
+make
+
+mkdir -p /usr/src/BUILD/usr/doc
+chown -R root.root doc
+mv doc /usr/src/BUILD/usr/doc/xvidcore-0.9.1
+
+cd build/generic 
+mkdir -p /usr/src/BUILD/usr/local/include
+mkdir -p /usr/src/BUILD/usr/local/lib
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr/local
+
+makepkg xvidcore-0.9.1-devel-9.0-1.tgz
+
+/--/  
+  
+\bye
+  

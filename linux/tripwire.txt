@@ -1,0 +1,74 @@
+rpm2cpio /mnt/tarball/crypt/tripwire-2.3.1.2-7mdk.i586.rpm | cpio -idmv
+find . -type d -exec chmod 755 {} \;
+
+rm -r etc/cron.daily
+cp ~hata/work/xyz/twnotfound.sh etc/tripwire   
+
+chgrp bin usr/sbin/
+find . -type f -perm +111 -exec strip {} \;
+
+#cat /usr/src/BUILD/etc/tripwire/twcfg.txt | \
+#  sed 's/^\(ROOT                   =\/usr\)\(\/sbin\)/\1\/local\2/' | \
+#  sed 's/^\(EDITOR                 =\)\(\/bin\/vi\)/\1\/usr\2/' > t
+#mv t /usr/src/BUILD/etc/tripwire/twcfg.txt  
+
+#sed 's/^\(TWADMPATH=\/usr\)\(\/sbin\)/\1\/local\2/' \
+#  /usr/src/BUILD/etc/tripwire/twinstall.sh > t
+#mv t /usr/src/BUILD/etc/tripwire/twinstall.sh  
+
+#cat /usr/src/BUILD/etc/tripwire/twpol.txt | \
+#  sed 's/^\(TWROOT=\/usr\)\(\/sbin\)/\1\/local\2/' |
+#  sed 's/^\(TWBIN=\/usr\)\(\/sbin\)/\1\/local\2/' |
+#  sed 's/^#\(\/var\/spool\/cron\/crontabs\)/\1/' |
+#  sed 's/\( *#\/etc\/conf.linuxconf\)/\
+#     \/etc\/apache                       -> \$(SEC_CONFIG) ;\
+#     \/etc\/ha.d                         -> \$(SEC_CONFIG) ;\
+#     \/etc\/courier-imap                 -> \$(SEC_CONFIG) ;\
+#     \/etc\/cron.5min                    -> \$(SEC_CONFIG) ;\
+#     \/etc\/dhcpd.conf                   -> \$(SEC_CONFIG) ;\
+#     \/etc\/logrotate.conf               -> \$(SEC_CONFIG) ;\
+#     \/etc\/logrotate.d                  -> \$(SEC_CONFIG) ;\
+#     \/etc\/pam.conf                     -> \$(SEC_CONFIG) ;\
+#     \/etc\/pam.d                        -> \$(SEC_CONFIG) ;\
+#     \/etc\/postfix                      -> \$(SEC_CONFIG) ;\
+#     \/etc\/ppp                          -> \$(SEC_CONFIG) ;\
+#     \/etc\/samba                        -> \$(SEC_CONFIG) ;\
+#     \/etc\/ssh                          -> \$(SEC_CONFIG) ;\
+#     \/etc\/ssl                          -> \$(SEC_CONFIG) ;\
+#     \/etc\/usermin                      -> \$(SEC_CONFIG) ;\
+#     \/etc\/webmin                       -> \$(SEC_CONFIG) ;\
+#     \/var\/named                        -> \$(SEC_CONFIG) ;\
+#\1/' > t
+#mv t /usr/src/BUILD/etc/tripwire/twpol.txt 
+
+makepkg tripwire-2.3.1.2-7mdk.i586.tgz
+
+/--/
+
+cd /etc/tripwire
+
+sh ./twinstall.sh
+
+tripwire --init
+
+#tripwire --check | grep Filename > twnotfound.txt
+tripwire --check 2>&1 | grep Filename > twnotfound.txt
+
+sh twnotfound.sh > t
+mv twpol.txt twpol.txt.ORIGIN
+mv t twpol.txt
+
+twadmin --create-polfile twpol.txt
+tripwire --init
+
+tripwire --update -r /var/lib/tripwire/report/{最後時間}.twr
+tripwire --check | mail -s "Tripwire Report from {some_host}" root@localhost
+
+
+/**/
+
+/usr/sbin/twadmin --generate-keys --site-keyfile /etc/tripwire/site.key
+/usr/sbin/twadmin --generate-keys --local-keyfile /etc/tripwire/nerv-local.key
+chmod 640 /etc/tripwire/site.key
+chmod 640 /etc/tripwire/nerv-local.key
+\bye

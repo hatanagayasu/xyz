@@ -1,0 +1,38 @@
+#CRACKLIB:
+#
+#__i586 do
+#make all
+#cp cracklib/libcrack.a /usr/local/lib
+
+/**/
+
+PAM:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --prefix=/usr --sysconfdir=/etc \
+  --enable-static-libpam
+make
+
+installwatch -o t.log make install FAKEROOT=/usr/src/BUILD \
+  MANDIR=/usr/man \
+  INCLUDED=/usr/include/security
+
+cp conf/pam.conf /usr/src/BUILD/etc/pam.conf
+
+mkdir -p /usr/src/BUILD/etc/pam.d
+cat <<HERE > /usr/src/BUILD/etc/pam.d/other
+#%PAM-1.0
+auth     required       pam_deny.so
+account  required       pam_deny.so
+password required       pam_deny.so
+session  required       pam_deny.so
+HERE
+
+#rm /usr/local/lib/libcrack.a
+
+chgrp bin /usr/src/BUILD/usr/sbin/
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg linux-pam-0.77-9.0-i586-1.tgz
+
+\bye

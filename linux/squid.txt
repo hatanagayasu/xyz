@@ -1,0 +1,67 @@
+
+LoadMIBS: /usr/lib/squid/mib.txt
+
+cacheProtoClientHttpRequests  " Number of HTTP requests received "
+cacheHttpHits                 " Number of HTTP Hits "
+cacheHttpInKb                 " Number of HTTP KB's received "
+cacheHttpOutKb                " Number of HTTP KB's transmitted "
+
+cacheServerRequests           " All requests from the client for the cache server "
+cacheServerInKb               " KB's of traffic received from servers "
+cacheServerOutKb              " KB's of traffic sent to servers "
+cacheClients                  " Number of clients accessing cache "
+
+cacheRequestHitRatio          " Request Hit Ratios "
+cacheRequestByteRatio         " Byte Hit Ratios "
+
+cacheClientHttpRequests       " Number of HTTP requests received from client "
+cacheClientHttpKb             " Amount of total HTTP traffic to this client  "
+cacheClientHttpHits           " Number of hits in response to this client's HTTP requests "
+cacheClientHTTPHitKb          " Amount of HTTP hit traffic in KB "
+
+cacheHttpMedianSvcFiveMin
+cacheHttpMedianSvcHour
+
+/**/
+
+LoadMIBs: /usr/lib/squid/mib.txt
+
+Options[proxy-inout]: growright, nopercent, bits
+Target[proxy-inout]: cacheHttpInKb&cacheHttpOutKb:public@localhost:3401
+MaxBytes[proxy-inout]: 76800
+Title[proxy-inout]: Cache Server Traffic In/Out
+PageTop[proxy-inout]: <H1>Cache Statistics: Server traffic volume (In/Out)</H1>
+ <TABLE>
+   <TR><TD>System:</TD><TD>ms</TD></TR>
+   <TR><TD>Maintainer:</TD><TD>hata</TD></TR>
+   <TR><TD>Description:</TD><TD>Squid Proxy server</TD></TR>
+ </TABLE>
+Suppress[proxy-inout]: y
+LegendI[proxy-inout]:  Traffic In
+LegendO[proxy-inout]:  Traffic Out
+Legend1[proxy-inout]:  Traffic In
+Legend2[proxy-inout]:  Traffic Out
+YLegend[proxy-inout]: per second
+ShortLegend[proxy-inout]: b/sec
+kMG[proxy-inout]: k,M,G,T
+kilo[proxy-inout]: 1024
+
+Options[proxy-hit]: growright, nopercent, perminute
+Target[proxy-hit]: cacheHttpHits&cacheProtoClientHttpRequests:public@localhost:3401
+MaxBytes[proxy-hit]: 100000
+Title[proxy-hit]: HTTP Hits
+PageTop[proxy-hit]: <H1>proxy Cache Statistics: HTTP Hits/Requests</H1>
+ <TABLE>
+   <TR><TD>System:</TD><TD>ms</TD></TR>
+   <TR><TD>Maintainer:</TD><TD>hata</TD></TR>
+   <TR><TD>Description:</TD><TD>Squid Proxy server</TD></TR>
+ </TABLE>
+Suppress[proxy-hit]: y
+LegendI[proxy-hit]:  HTTP hits
+LegendO[proxy-hit]:  HTTP requests
+Legend1[proxy-hit]:  HTTP hits
+Legend2[proxy-hit]:  HTTP requests
+YLegend[proxy-hit]: per minute
+ShortLegend[proxy-hit]: req/min
+
+\bye

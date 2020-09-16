@@ -1,0 +1,19 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+
+
+
+
+/--/
+
+#!/bin/sh
+# Add User blackhole and Group clamav:
+if egrep '^blackhole:' /etc/passwd ; then
+  true
+else
+  groupadd -g 205 blackhole
+  useradd -u 205 -g 205 -s /bin/false -c blackhole -d /dev/null blackhole
+fi
+
+\bye

@@ -1,0 +1,17 @@
+
+http://api.flickr.com/services/feeds/activity.gne?id=95902089@N00&format=rss_200
+http://api.flickr.com/services/feeds/photos_comments.gne?user_id=95902089@N00&format=rss_200
+
+http://api.flickr.com/services/feeds/photos_friends.gne?user_id=53808992@N00&friends=0&display_all=1&format=rss_200
+http://api.flickr.com/services/feeds/photos_friends.gne?user_id=53808992@N00&friends=0&display_all=0&format=rss_200
+
+http://www.flickr.com/services/feeds/photos_public.gne?id=95902089@N00&format=rss_200
+
+http://interestingby.isaias.com.mx/pm.php?id=72753560@N00
+
+
+
+http://api.flickr.com/services/feeds/photos_comments.gne?user_id=40044945@N00&format=rss_200
+http://api.flickr.com/services/feeds/activity.gne?user_id=40044945@N00&format=rss_200
+
+\bye

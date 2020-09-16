@@ -1,0 +1,2 @@
+deb ftp://ftp.nsysu.edu.tw/Linux/Debian/debian testing main contrib non-free
+deb ftp://ftp.nsysu.edu.tw/Linux/Debian/debian-non-US testing/non-US main contrib non-free

@@ -1,0 +1,19 @@
+mv include/freetype/config/ftoption.h \
+  include/freetype/config/ftoption.h.ORIGIN
+sed 's/\/\* #define  TT_CONFIG_OPTION_BYTECODE_INTERPRETER \*\//'\
+'#define  TT_CONFIG_OPTION_BYTECODE_INTERPRETER/' \
+  include/freetype/config/ftoption.h.ORIGIN > \
+  include/freetype/config/ftoption.h
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install
+__log t.log install
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg freetype-2.1.4-9.0-i586-1.tgz
+
+\bye

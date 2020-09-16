@@ -1,0 +1,51 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib/pgsql \
+  --enable-multibyte=UNICODE --with-openssl --with-pam
+make
+
+groupadd -g 28 postgres
+useradd -u 28 -g postgres -s /bin/bash -c postgres -d /var/lib/pgsql postgres
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/install
+cat << HERE > /usr/src/BUILD/install/doinst.sh
+#!/bin/sh
+# Add User postgres and Group postgres:
+
+if groupadd -g 28 postgres; then
+  true
+else
+  groupadd postgres
+fi
+if useradd -u 28 -g postgres -s /bin/bash -c postgres -d /var/lib/pgsql postgres; then
+  true
+else
+  useradd -g postgres -s /bin/bash -c postgres -d /var/lib/pgsql postgres
+fi
+
+chown postgres.postgres /var/lib/pgsql
+#su postgres -c "/usr/bin/initdb -E UNICODE -D /var/lib/pgsql"
+
+HERE
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+cp ~hata/work/xyz/rc.pgsql /usr/src/BUILD/etc/rc.d
+
+mkdir -p /usr/src/BUILD/var/lib/pgsql
+
+chown root.root /usr/src/BUILD/usr/doc/postgresql -R
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg postgresql-7.3.4-9.0-i586-1.tgz
+
+/**/
+
+su postgres -c "/usr/bin/postmaster -D /var/lib/pgsql" &
+su postgres -c "/usr/bin/createdb -E EUC_TW mydb"
+
+/etc/profile
+export PGCLIENTENCODING='BIG5'
+
+\bye

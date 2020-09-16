@@ -1,0 +1,13 @@
+./configure --prefix=/usr/local --sysconfdir=/etc/ppp
+
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+   
+   
+   --localstatedir=/var/lib
+
+makepkg poptop-1.1.4-9.0-i586-1.tgz
+
+\bye
+  

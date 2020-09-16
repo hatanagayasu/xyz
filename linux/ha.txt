@@ -1,0 +1,31 @@
+libnet:
+
+CPPFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr/local
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+makepkg libnet-1.1.0-9.0-i586-2.tgz
+
+/--/
+
+heartbeat:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --sysconfdir=/etc --localstatedir=/var
+
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+cp doc/ha.cf /usr/src/BUILD/etc/ha.d
+cp doc/haresources /usr/src/BUILD/etc/ha.d
+cp doc/authkeys /usr/src/BUILD/etc/ha.d
+chmod 600 /usr/src/BUILD/etc/ha.d/authkeys
+
+chgrp bin /usr/src/BUILD/usr/local/bin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+        
+makepkg heartbeat-1.0.3-9.0-i586-2.tgz
+
+\bye

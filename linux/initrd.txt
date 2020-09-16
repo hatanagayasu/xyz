@@ -1,0 +1,4 @@
+
+find . | cpio --quiet -H newc -o | gzip -9 -n > /mnt/tftproot/initrd
+
+\bye

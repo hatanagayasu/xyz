@@ -1,0 +1,13 @@
+
+AUDIOSERVER=localhost:0
+LD_PRELOAD=/usr/X11R6/lib/libaudiooss.so.1.0
+
+cd /dev
+rm dsp 
+ln -s sound/dsp dsp_x
+mknod dsp c 121 2
+rm mixer
+ln -s sound/mixer mixer_x
+mknod mixer c 121 3
+
+LD_LIBRARY_PATH

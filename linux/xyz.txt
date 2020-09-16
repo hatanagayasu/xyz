@@ -1,0 +1,133 @@
+
+cdrecord -scanbus
+cdrecord -v speed=16 dev=0,1,0 -eject -isosize /dev/scd0
+cdrecord -v -speed=16 -dev=0,1,0 -eject filename.iso
+
+cdrdao copy --on-the-fly --eject --device /dev/sg0
+  --source-device 1,0,0 --speed 12 --driver generic-mmc
+
+cdrdao read-cd --read-raw --datafile FF_VII_Eng_#1.bin --device \
+  ATAPI:0,1,0 --driver generic-mmc-raw FF_VII_Eng_#1.toc
+
+growisofs -Z /dev/hdc -R -J -V "FF_VII_PS" \
+  FF_VII_Eng_#1.bin FF_VII_Eng_#2.bin FF_VII_Eng_#3.bin \
+  FF_VII_Jpn_#1.bin FF_VII_Jpn_#2.bin FF_VII_Jpn_#3.bin
+
+ethernet0.addressType = "static"
+ethernet0.address = 00:50:56:00:00:01
+
+javascript:alert(document.lastModified)
+
+iptables -t nat -A PREROUTING -i ppp0 -p tcp --dport 1720 \
+  -j DNAT --to 192.168.2.2
+
+mount -t vfat -o iocharset=big5,codepage=950,uid=1000,gid=100,umask=0002 \
+  /dev/hdxx /mnt/fat
+mount -o nls=utf8,umask=0002 /dev/sda5 /mnt/hd/
+
+ifconfig eth0 hw ether 00:48:50:22:33:44
+
+_POSIX2_VERSION=199209
+
+iptables -A FORWARD -p icmp --icmp-type echo-request -m limit \
+  --limit 1/s -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type echo-request -m limit \
+  --limit 1/s -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+/--/
+
+87515519
+
+LD_LIBRARY_PATH
+
+distcc-config --set-hosts "localhost 192.168.1.131"
+FEATURES="distcc" MAKEOPTS="-j4"
+
+WANT_AUTOMAKE="1.4"
+
+cd /usr/X11R6/lib
+ld --whole-archive -share -o libXinerama.so.1 libXinerama.a
+ln -s libXinerama.so.1 libXinerama.so
+ldconfig
+
+/--/
+
+00
+01 single via    vt82c596b
+02 single intel  piix4 33 100 133
+03 single sis    sis5513
+04 dual   intel  piix4 33
+05 dual   MPT    lsi1030
+06 x20 x21 x30   piix4 33 100
+07 hp dl380
+
+/--/
+
+Specifiche PIO (Programmed IO) (disk mode + 8)
+hdparm -X08 -> PIO 0 3.3MB/sec
+hdparm -X09 -> PIO 1 5.2MB/sec
+hdparm -X10 -> PIO 2 8.3MB/sec
+hdparm -X11 -> PIO 3 11.1MB/sec
+hdparm -X12 -> PIO 4 16.7MB/sec
+
+Specifiche SDMA (Single-word DMA) (disk mode + 16)
+hdparm -X16 -> SDMA 0 2.1MB/sec
+hdparm -X17 -> SDMA 1 4.2MB/sec
+hdparm -X18 -> SDMA 2 8.3MB/sec
+
+Specifiche MDMA (Multi-word DMA) (disk mode + 32)
+hdparm -X32 -> MDMA 0 4.2MB/sec
+hdparm -X33 -> MDMA 1 13.3MB/sec
+hdparm -X34 -> MDMA 2 16.6MB/sec
+
+Specifiche UDMA (Ultra-DMA) (disk mode + 64)
+hdparm -X64 -> UDMA 0 (ATA16) 16.7MB/sec
+hdparm -X65 -> UDMA 1 (ATA 25) 25MB/sec
+hdparm -X66 -> UDMA 2 (ATA 33) 33MB/sec
+hdparm -X67 -> UDMA 3 (ATA 44) 44.4MB/sec
+hdparm -X68 -> UDMA 4 (ATA 66) 66MB/sec
+hdparm -X69 -> UDMA 5 (ATA 100)100MB/sec
+
+Windows 2000 Server 簡體中文版
+H6TWQ-TQQM8-HXJYG-D69F7-R84VM
+JVJDR-KY99G-B8J4C-MKJ69-P8QG3
+XFD2W-W7VH8-MVC47-KY7DQ-P8Y4J
+
+Windows XP 簡體中文版
+T72KM-6GWBP-GX7TD-CXFT2-7WT2B
+
+Windows XP 繁體中文版
+BKGDT-PJX4K-TTWHV-WR8KK-BYHY3
+VVRJ3-TMRW2-84F38-YH8FX-BYCCG
+
+簡體中文版
+Windows 2000 Professional  :   PQHKR-G4JFW-VTY3P-G4WQ2-88CTW
+Windows 2000 Server     :   H6TWQ-TQQM8-HXJYG-D69F7-R84VM
+Windows 2000 Advanced Server:   RBDC9-VTRC8-D7972-J97JY-PRVMG
+
+88407
+
+Windows2003S CHT QM8TJ-63CVR-6G6PQ-BYMMY-J8KVM
+
+Office 2003
+GWH28-DGCMP-P6RC4-6J4MT-3HFDY
+
+00:11:2F:2B:64:75
+
+for f in *.mp3; do a=${f%%-*}; t=${f##*-}; t=${t%.mp3}; id3v2 -a "$a" -t "$t" "$f"; done
+for f in *.mp3; do a=${f%%-*}; a=`echo $a | iconv -f utf-8 -t cp950`; t=${f##*-}; t=${t%.mp3}; t=`echo $t | iconv -f utf-8 -t cp950`; id3v2 -a "$a" -t "$t" "$f"; done
+
+ 1  3  4  2
+ 5  7  8  6
+ 9 11 12 10
+13 15 16 14
+17 19 20 18
+21 23 24 22
+25 27 28 26
+29 31 32 30
+33 35 36 34
+37 39 40 38
+41 43 44 42
+
+\bye

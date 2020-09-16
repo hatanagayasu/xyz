@@ -1,0 +1,75 @@
+echo cyrus:x:12345:12:postfix:/dev/null:/bin/false >> /etc/passwd
+echo sieve::12346: >> /etc/group
+
+./configure --with-openssl=/usr/local/ssl --with-sasl
+
+joe perl/Makefile perl/sieve/Makefile perl/sieve/lib/Makefile
+prefix = /usr
+
+make depend
+make all CFLAGS='-O2 -march=i586'
+
+cd perl
+script
+make install
+exit
+cd ..
+
+installwatch -o t.log make install
+joe /usr/lib/perl5/i386-linux/perllocal.pod
+
+cp master/conf/normal.conf /etc/cyrus.conf
+
+cat > /etc/imapd.conf
+configdirectory: /var/imap
+partition-default: /var/spool/imap
+admins: cyrus
+sasl_pwcheck_method: saslauthd
+^D
+
+mkdir -p /var/imap
+chown -R cyrus:mail /var/imap
+mkdir -p /var/spool/imap
+chown -R cyrus:mail /var/spool/imap
+mkdir -p /usr/sieve
+chown -R cyrus:sieve /usr/sieve
+
+#touch /var/log/imapd.log /var/log/auth.log
+#echo -e 'local6.debug\t\t\t\t\t/var/log/imapd.log' >> /etc/syslog.conf
+#echo -e 'auth.debug\t\t\t\t\t/var/log/auth.log' >> /etc/syslog.conf
+#echo >> /etc/syslog.conf
+
+#chattr +S /var/imap/user /var/imap/user/*
+#chattr +S /var/imap/quota /var/imap/quota/*
+#chattr +S /var/spool/imap /var/spool/imap/*
+
+__zip t.log | xargs zip -gy cyrus-imapd-2.1.11-i586-1.zip
+zip -d cyrus-imapd-2.1.11-i586-1.zip usr/lib/perl5/i386-linux/perllocal.pod
+cat perl/typescript | egrep '^(I|W)' | cut -f 2- -d ' ' | \
+  xargs zip -gy cyrus-imapd-2.1.11-i586-1.zip
+zip -gy cyrus-imapd-2.1.11-i586-1.zip /etc/cyrus.conf
+zip -gy cyrus-imapd-2.1.11-i586-1.zip /etc/imapd.conf
+
+su cyrus
+tools/mkimap
+exit
+
+zip -gry cyrus-imapd-2.1.11-i586-1.zip /var/imap
+zip -gry cyrus-imapd-2.1.11-i586-1.zip /var/spool/imap
+zip -gry cyrus-imapd-2.1.11-i586-1.zip /usr/sieve
+
+/**/
+
+sasl_pwcheck_method: saslauthd auxprop
+sasl_auxprop_plugin: mysql
+sasl_mysql_user: postfix
+sasl_mysql_passwd: postfix
+sasl_mysql_hostnames: localhost
+sasl_mysql_database: mail
+sasl_mysql_statement: select password from mailbox where username = '%u@%r'
+sasl_mysql_verbose: yes
+
+chmod 400 /etc/imapd.conf
+
+unixhierarchysep: yes
+altnamespace: test1.xxx

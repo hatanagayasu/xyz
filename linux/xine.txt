@@ -1,0 +1,37 @@
+XINE-LIB:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install prefix=/usr/src/BUILD/usr
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg xine-lib-1-beta12-9.0-i586-3.tgz
+
+/**/
+
+XINE-UI:
+
+CFLAGS="-march=i586 -mcpu=i586" ./configure --prefix=/usr
+make
+
+installwatch -o t.log make install
+__log t.log install
+
+cd /usr/src/BUILD/usr/share/xine/skins
+
+find /mnt/tarball/video/xine-skins -name *.tar.gz -exec tar xvfz {} \;
+chown -R root.root *
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
+
+cd ../../../..
+
+chgrp bin /usr/src/BUILD/usr/bin
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg xine-ui-0.9.21-9.0-i586-3.tgz
+
+\bye

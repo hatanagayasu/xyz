@@ -1,0 +1,19 @@
+#!/bin/sh
+# Start/stop/restart the Postfix server:
+
+case $1 in
+  start)
+    echo "Starting Postfix..."
+    /usr/sbin/postfix start
+    ;;
+  restart)
+    echo "Restarting Postfix..."
+    /usr/sbin/postfix reload
+    ;;
+  stop)
+    echo "Stopping Postfix..."
+    /usr/sbin/postfix stop
+    ;;
+  *)
+    echo "usage $0 start|stop|restart"
+esac

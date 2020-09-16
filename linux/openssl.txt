@@ -1,0 +1,75 @@
+./Configure linux-pentium shared --prefix=/usr --openssldir=/etc/ssl
+
+mv Makefile Makefile.ORIGIN
+sed 's/-mcpu=pentium/-march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+make
+
+installwatch -o t.log make install INSTALL_PREFIX=/usr/src/BUILD MANDIR=/usr/man
+
+chgrp bin /usr/src/BUILD/usr/bin/
+find . -type f -perm +111 -exec strip {} \;
+
+makepkg openssl-0.9.7c-9.0-i586-1.tgz
+
+/**/
+
+#export OPENSSL_CONF="/etc/ssl/openssl.cnf"
+#echo "export OPENSSL_CONF=\"/etc/ssl/openssl.cnf\"" >> ~/.bashrc
+
+openssl rand -out /etc/ssl/private/.rand 1024
+chmod og-rwx /etc/ssl/private/.rand
+
+mv /etc/ssl/openssl.cnf /etc/ssl/openssl.cnf.ORIGIN
+sed 's/\.\/demoCA/\/etc\/ssl/' /etc/ssl/openssl.cnf.ORIGIN > \
+  /etc/ssl/openssl.cnf
+
+export signkey=
+openssl genrsa -des3 -out $signkey.key 2048
+openssl req -new -key $signkey.key -out $signkey.req
+openssl x509 -req -days 7305 -sha1 \
+  -extfile /etc/ssl/openssl.cnf -extensions v3_ca \
+  -signkey $signkey.key -in $signkey.req -out $signkey.crt
+
+/**/
+
+export server=
+openssl genrsa -out $server.key 2048
+openssl req -new -key $server.key -out $server.req
+openssl x509 -req -days 3650 -sha1 \
+  -extfile /etc/ssl/openssl.cnf -extensions v3_req \
+  -CA $signkey.crt -CAkey $signkey.key -CAserial $server.srl -CAcreateserial \
+  -in $server.req -out $server.crt
+
+/**/
+
+#!/bin/sh
+ca_dir="/usr/share/ssl/CA"
+ssl_dir="/etc/httpd/conf"
+umask 0077
+[ -d ${ssl_dir} ] || mkdir -p ${ssl_dir}
+[ -d ${ssl_dir}/ssl.crl ] || mkdir -p ${ssl_dir}/ssl.crl
+[ -d ${ssl_dir}/ssl.crt ] || mkdir -p ${ssl_dir}/ssl.crt
+[ -d ${ssl_dir}/ssl.csr ] || mkdir -p ${ssl_dir}/ssl.csr
+[ -d ${ssl_dir}/ssl.key ] || mkdir -p ${ssl_dir}/ssl.key
+[ -d ${ssl_dir}/ssl.prm ] || mkdir -p ${ssl_dir}/ssl.prm
+[ -d ${ca_dir}/crl ] || mkdir -p ${ca_dir}/crl
+[ -d ${ca_dir}/private ] || mkdir -p ${ca_dir}/private
+[ -d ${ca_dir}/newcerts ] || mkdir -p ${ca_dir}/newcerts
+echo "01" > ${ca_dir}/serial
+cp /dev/null ${ca_dir}/index.txt
+cd ${ssl_dir}
+openssl req -new -x509 -keyout ${ca_dir}/private/cakey.pem -out
+${ca_dir}/cacert.pem -days 365
+openssl req -nodes -new -x509 -keyout ${ssl_dir}/ssl.key/server.key -out
+${ssl_dir}/ssl.csr/server.csr -days 365
+openssl rsa -in ${ssl_dir}/ssl.key/server.key -des3 -out
+${ssl_dir}/ssl.prm/server.pem
+openssl x509 -x509toreq -in ${ssl_dir}/ssl.csr/server.csr -signkey
+${ssl_dir}/ssl.key/server.key -out ${ssl_dir}/server.tmp
+openssl ca -policy policy_anything -out ${ssl_dir}/ssl.crt/server.crt
+-infiles ${ssl_dir}/server.tmp
+ln -sf ${ca_dir}/cacert.pem ${ssl_dir}/enssl x509 -noout -hash <
+${ca_dir}/cacert.pem.0
+rm -f ${ssl_dir}/server.tmp
+
+\bye

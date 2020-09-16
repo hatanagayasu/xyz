@@ -1,0 +1,72 @@
+CFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --prefix=/usr --sysconfdir=/etc/samba \
+  --localstatedir=/var/log/samba --with-configdir=/etc/samba \
+  --with-privatedir=/etc/samba/private --datadir=/usr/share/samba \
+  --with-swatdir=/usr/share/samba/swat \
+  --with-automount --with-smbmount \
+  --with-pam --with-pam_smbpass \
+  --with-ssl --with-libsmbclient --with-acl-support \
+  --with-msdfs \
+  --with-winbind --with-winbind-auth-challenge
+make
+
+#--with-ldapsam
+#--with-winbind-ldap-hack
+
+mkdir -p /usr/src/BUILD/usr/share/samba/swat
+installwatch -o t.log make install \
+  prefix=/usr/src/BUILD/usr \
+  sysconfdir=/usr/src/BUILD/etc/samba \
+  VARDIR=/usr/src/BUILD/var/log/samba \
+  CONFIGDIR=/usr/src/BUILD/etc/samba \
+  PRIVATEDIR=/usr/src/BUILD/etc/samba/private \
+  DATADIR=/usr/src/BUILD/usr/share/samba \
+  SWATDIR=/usr/src/BUILD/usr/share/samba/swat
+
+cp -a --parents /sbin/mount.smbfs /usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/etc/samba/private
+cp ../examples/smb.conf.default /usr/src/BUILD/etc/samba
+cp ../examples/smb.conf.default /usr/src/BUILD/etc/samba/smb.conf
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+cp ~hata/work/xyz/rc.samba /usr/src/BUILD/etc/rc.d
+
+chgrp bin /usr/src/BUILD/usr/bin/
+chgrp bin /usr/src/BUILD/usr/sbin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+ln -sf /usr/bin/smbmount /usr/src/BUILD/sbin/mount.smbfs
+
+makepkg samba-3.0.0-9.0-i586-1.tgz
+
+/**/
+
+net groupmap modify ntgroup="Domain Users" unixgroup=users
+net groupmap modify ntgroup="Domain Admins" unixgroup=root
+net groupmap modify ntgroup="Administrators" unixgroup=root
+
+net groupmap add rid=10001 ntgroup="CEOROOM" unixgroup=ceoroom
+net groupmap add rid=10002 ntgroup="PM" unixgroup=pm
+net groupmap add rid=10003 ntgroup="PRESALE" unixgroup=presale
+net groupmap add rid=10004 ntgroup="SALE" unixgroup=sale
+net groupmap add rid=10005 ntgroup="ADMIN" unixgroup=admin
+net groupmap add rid=10009 ntgroup="RD" unixgroup=rd
+net groupmap add rid=10010 ntgroup="KAF" unixgroup=kaf
+
+
+ssl CA certDir = /etc/ssl/certs
+nt acl support = Yes
+
+# 載入 資源回收筒 模組
+vfs object = recycle
+# 在將檔案移入 資源回收筒 時，要建立相對應的目錄結構
+recycle: keeptree = yes
+# 資源回收筒 之相對路徑。後面的 %u 則為使用者帳號。
+recycle: repository = ../Recycle/%u
+# 不進行 資源回收 的檔案類型
+recycle: exclude = .tmp|.temp|.o|.obj
+# 若有相同檔案名稱時，則加以編號識別
+recycle: versions = yes
+
+\bye

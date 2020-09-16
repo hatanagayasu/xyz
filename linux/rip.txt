@@ -1,0 +1,9 @@
+
+rip --cddb -eject --superlazy --tag --format "%N_%S" -b 128
+
+streamripper http://64.236.34.97:80/stream/1040 -k 1 -s -o never
+
+#mplayer -dumpaudio nodame_theme.flv -dumpfile nodame_theme.mp3
+ffmpeg -i nodame_theme.flv -ab 128 -ar 44100 nodame_theme.mp3
+
+\bye

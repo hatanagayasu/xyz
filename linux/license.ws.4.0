@@ -1,0 +1,12 @@
+# VMware software license
+StartFields = "Cpt, ProductID, LicenseVersion, LicenseType, Epoch"
+Cpt = "COPYRIGHT (c) VMware, Inc. 1999-2003"
+ProductID = "VMware Workstation for Linux"
+LicenseVersion = "4.0"
+LicenseType = "User"
+Epoch = "2003-2-1"
+Serial = "NCTAD-KF1D5-P054K-4KHL0"
+Name = "hata"
+CompanyName = "isee.com.tw"
+LastModified = "2004-08-06 @ 04:41:26 UTC"
+Hash = "128da16f-a7ccd625-c2901080-9bc81098-9d093437"

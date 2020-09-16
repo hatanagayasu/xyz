@@ -1,0 +1,45 @@
+CFLAGS="-march=i586" ./configure \
+  --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib/mysql \
+  --with-charset=big5 --with-extra-charsets=all --with-openssl
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+mkdir -p /usr/src/BUILD/etc
+cp support-files/my-medium.cnf /usr/src/BUILD/etc/my.cnf
+
+/--/
+
+mkdir -p /usr/src/BUILD/var/lib/mysql
+chown -R mysql.mysql /usr/src/BUILD/var/lib/mysql
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+#cp ~hata/work/xyz/rc.mysql /usr/src/BUILD/etc/rc.d
+ln -s /usr/share/mysql/mysql.server /usr/src/BUILD/etc/rc.d/rc.mysql
+
+makepkg mysql-4.0.14-9.0-i586-1.tgz
+
+/**/
+
+su mysql -c /usr/bin/mysql_install_db
+
+/bin/mysqld_safe
+/usr/bin/mysqladmin -u root -p shutdown
+/usr/bin/mysqladmin -u root password '#'
+/usr/bin/mysqladmin -u root old-password '#'
+
+set password for 'root'@'localhost' = OLD_PASSWORD('#');
+
+CREATE USER 'user'@'host' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'host' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON `bugtracker` . * TO 'gigade'@'%' WITH GRANT OPTION ;
+FLUSH PRIVILEGES;
+
+/**/
+
+[client]
+default-character-set=utf8
+[mysqld]
+default-character-set=utf8
+
+\bye

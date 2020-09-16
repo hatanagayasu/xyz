@@ -1,0 +1,72 @@
+
+
+mv install.sh install.sh.ORIGIN
+sed 's/LIBDIR=\/usr\/local\/lib/LIBDIR=\/usr\/lib/' install.sh.ORIGIN | \
+  sed 's/INCLUDEDIR=\/usr\/local\/include/INCLUDEDIR=\/usr\/include/' > install.sh
+  
+installwatch -o t.log sh ./install.sh
+
+
+__log t.log install
+
+win32codecs,qt6dlls,rp9win32codecs:
+
+cd /usr/lib
+tar xvfj /mnt/tarball/video/win32codecs.tar.bz2
+tar xvfj /mnt/tarball/video/qt6dlls.tar.bz2
+tar xvfj /mnt/tarball/video/rp9win32codecs.tar.bz2
+tar xvfj /mnt/tarball/video/xanimdlls.tar.bz2
+chown -R root.root qt6dlls  rp9win32codecs  win32codecs xanimdlls
+chmod 755 xanimdlls/*
+
+Mplayer:
+
+./configure --prefix=/usr --enable-gui \
+  --with-win32libdir=/usr/lib/win32codecs \
+  --with-xanimlibdir=/usr/lib/xanimdlls \
+  --with-reallibdir=/usr/lib/rp9win32codecs \
+  --enable-qtx --with-xvidcore=/usr/lib
+#--disable-gcc-checking
+mv config.mak config.mak.ORIGIN
+sed 's/pentium3/i586/g' config.mak.ORIGIN > config.mak
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+cp etc/input.conf /usr/src/BUILD/usr/etc/mplayer
+cp etc/example.conf /usr/src/BUILD/usr/etc/mplayer/mplayer.conf
+
+cd /usr/lib
+mkdir -p /usr/src/BUILD/usr/lib
+mv qt6dlls  rp9win32codecs  win32codecs xanimdlls /usr/src/BUILD/usr/lib
+
+cd /usr/src/BUILD/usr/share/mplayer/Skin
+tar xvfj /mnt/tarball/video/default-1.7.tar.bz2
+chown -R root.root *
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
+
+cd ../../../..
+
+chgrp bin /usr/src/BUILD/usr/bin/
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+
+makepkg mplayer-0.91-9.0-i586-1.tgz
+
+/**/
+
+mplayer-plugin:
+
+mv Makefile Makefile.ORIGIN
+sed 's/^OPTIMIZER=/& -march=i586 -mcpu=i586/' Makefile.ORIGIN > Makefile
+
+make
+
+mkdir -p /usr/src/BUILD/usr/local/mozilla/plugins
+cp mplayerplug-in.so /usr/src/BUILD/usr/local/mozilla/plugins
+
+makepkg mplayerplug-0.80-9.0-i586-1.tgz
+
+gmplayer -zoom
+
+\bye

@@ -1,0 +1,42 @@
+su - xyz -c "vmware-server-console -h server03 -u hata -w 8341hata"
+
+VMware Server 2 for Windows     A0081-PWG83-18315-4KQ3R
+VMware Server 2 for Linux       AA40H-PWZ23-00LAQ-4LN34
+
+VMware Server 2 for Windows     A8J05-FU384-V533N-4C6TH
+VMware Server 2 for Linux       A85A0-FK687-U940Q-4TP8D
+
+VMware Server (windows) 1.0.4 Build 56528
+90X4M-YR842-1AMC2-41K1X
+9ATD5-YRR63-1AH3P-49PT4
+92E6J-YUW67-1AH3P-43L11
+9A860-YUX4L-125C3-4CQRR
+98D61-YUDF6-121CL-413UJ
+
+VMware Workstation (windows) 5.0 Build 13124
+s/n: PVN6X-JKD66-K0H4Z-4PRQ3
+s/n: C1560-7PE6V-F84FC-4Y9NK
+s/n: NAJK9-0W7FM-72N6C-4WTX2
+
+VMware Workstation (Linux) 5.0 Build 13124
+s/n: 5H5A5-WKEDE-8AM6G-4WWQ2
+s/n: D89DH-164D7-N0JFV-4PTNP
+s/n: K88DW-LD0DJ-5A16G-4W8QL
+
+VMware Workstation 3.0 FOR 2000/XP sn: 		60N88-8DW44-16H77-32KT4
+						0D7C6-01NKH-0K8AJ-1F4DG
+						0663L-035LN-0298H-1A96A
+						06736-03HL4-00DAW-1DHDZ
+VMWare Workstation 3.0 for Linux 		6818X-84WD1-01KDK-3JN9X
+VMWare Workstation 3.0 for Win
+						60N88-8DW44-16H77-32KT4
+						60408-8486H-13292-3HN3M¡@¡@
+VMware  WinNT/2K 3.1.1 Build 1790		s/n: 60408-8486H-13292-3HN3M
+
+4.x Linux   NCTAD-KF1D5-P054K-4KHL0
+4.x Windows ZA0M8-7098W-M856C-4MEQQ
+
+LOOKUP          ^(sd|sr|scd|sg|fd)[a-z0-9]+$ IGNORE
+# Enable module autoloading. You may comment this out if you don't use
+# autoloading
+LOOKUP          .*           MODLOAD

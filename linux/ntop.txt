@@ -1,0 +1,51 @@
+cd gdchart0.94c
+./configure
+
+mv Makefile Makefile.ORIGIN
+sed 's/^CC = gcc/& -march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+
+mv gd-1.8.3/Makefile gd-1.8.3/Makefile.ORIGIN
+cat gd-1.8.3/Makefile.ORIGIN | \
+  sed 's/^CFLAGS=/&-march=i586 -mcpu=i586 -DHAVE_JPEG -DHAVE_LIBTTF /' | \
+  sed 's/^LIBS=/&-ljpeg -lttf /' | \
+  sed 's/^INCLUDEDIRS=/&-I\/usr\/include\/freetype1\/freetype /' > \
+  gd-1.8.3/Makefile
+
+cd gd-1.8.3/libpng-1.2.4
+cp scripts/makefile.linux Makefile.ORIGIN
+sed 's/CFLAGS=/&-march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+make
+
+cd ../../zlib-1.1.4/
+./configure
+mv Makefile Makefile.ORIGIN
+sed 's/CFLAGS=/&-march=i586 -mcpu=i586 /' Makefile.ORIGIN > Makefile
+make
+
+cd ..
+make
+
+cd ../ntop
+CPPFLAGS="-march=i586 -mcpu=i586" ./configure \
+  --localstatedir=/var/lib
+make
+
+installwatch -o t.log make install
+mkdir -p /usr/src/BUILD/var/lib/ntop
+
+__log t.log install
+
+chgrp bin /usr/src/BUILD/usr/local/bin/
+find /usr/src/BUILD/ -type f -perm +111 -exec strip {} \;
+
+makepkg ntop-2.2c-9.0-i586-1.tgz
+
+/**/
+
+ntop -u nobody -i eth0 -E -d
+
+cp database/mySQL* /usr/src/BUILD/usr/local/share/ntop
+perl mySQLserver.pl &
+ntop -P /var/lib/ntop -u nobody -i eth0 -E -b localhost:4000 -d
+
+\bye

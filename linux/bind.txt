@@ -1,0 +1,66 @@
+acl TRUSTED_net {
+                192.168.100.0/24;
+                10.0.2.0/24;
+        };
+
+        options {
+                directory "/var/named";
+        };
+       
+       
+        view "internal" {
+        match-clients { TRUSTED_NET; };
+        recursion yes;
+
+        zone "." IN {
+                type hint;
+                file "named.ca";
+        };
+
+        zone "0.0.127.in-addr.arpa" IN {
+                type master;
+                file "named.local";
+                allow-update { none; };
+        };
+        zone "xxx.yyy.tw" IN {
+                type master;
+                file "xxx.yyy.tw.internal";
+                allow-update { none; };
+        };
+        zone "24.129.63.in-addr.arpa" IN {
+                type master;
+                file "63.129.24.rev";
+                allow-update { none; };
+        };
+        zone "1.18.10.in-addr.arpa" IN {
+                type master;
+                file "10.18.1.rev";
+                allow-update { none; };
+        };
+};
+
+view "external" {
+        match-clients { any; };
+        recursion yes;
+
+        zone "." IN {
+                type hint;
+                file "named.ca";
+        };
+
+        zone "0.0.127.in-addr.arpa" IN {
+                type master;
+                file "named.local";
+                allow-update { none; };
+        };
+        zone "xxx.yyy.tw" IN {
+                type master;
+                file "xxx.yyy.tw";
+                allow-update { none; };
+        };
+        zone "24.129.63.in-addr.arpa" IN {
+                type master;
+                file "63.129.24.rev";
+                allow-update { none; };
+        };
+};

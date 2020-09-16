@@ -1,0 +1,165 @@
+patch -p 1 < /mnt/tarball/mail/pfixtls-0.8.15-2.0.13-0.9.7b
+patch -p 1 < /mnt/tarball/mail/postfix-pg.postfix-2.0.0.2.patch
+
+make -f Makefile.init makefiles OPT="-march=i586 -mcpu=i586" \
+  CCARGS="-DUSE_SASL_AUTH -I/usr/include/sasl "\
+"-DHAS_SSL -DHAS_LDAP -DHAS_PGSQL" \
+  AUXLIBS="-L/usr/lib -lsasl2 -lssl -lcrypt -lldap -llber -lpq"
+
+make
+strip bin/* libexec/*
+
+groupadd -g 29 postfix
+groupadd -g 30 postdrop
+useradd -u 29 -g postfix -s /bin/false -c postfix -d /dev/null postfix
+
+installwatch -o t.log make install
+
+manpage_directory: [/usr/local/man] /usr/man
+readme_directory: [no] /usr/doc/postfix
+
+#daemon_directory: [/usr/libexec/postfix] /usr/local/libexec/postfix
+#command_directory: [/usr/sbin] /usr/local/sbin
+
+__log t.log install
+
+/--/
+
+mkdir -p /usr/src/BUILD/install
+cat << HERE > /usr/src/BUILD/install/doinst.sh
+#!/bin/sh
+# Add User postfix and Group postdrop:
+
+if groupadd -g 29 postfix; then
+  true
+else
+  groupadd postfix
+fi
+if groupadd -g 30 postdrop; then
+  true
+else
+  groupadd postdrop
+fi
+if useradd -u 29 -g postfix -s /bin/false -c postfix -d /dev/null postfix; then
+  true
+else
+  useradd -g postfix -s /bin/false -c postfix -d /dev/null postfix
+fi
+
+HERE
+
+find . -user postfix -exec echo chown postfix {} \; >> \
+  /usr/src/BUILD/install/doinst.sh
+find . -group postdrop -exec echo chgrp postdrop {} \; >> \
+  /usr/src/BUILD/install/doinst.sh
+
+mkdir -p /usr/src/BUILD/etc/rc.d
+cp ~hata/work/xyz/rc.postfix /usr/src/BUILD/etc/rc.d/rc.postfix
+
+mkdir -p /usr/src/BUILD/etc/pam.d
+cat << HERE > /usr/src/BUILD/etc/pam.d/smtp
+auth       required   pam_unix.so
+account    required   pam_unix.so
+HERE
+
+mkdir -p /usr/src/BUILD/usr/lib/sasl2
+cat << HERE > /usr/src/BUILD/usr/lib/sasl2/smtpd.conf
+pwcheck_method: saslauthd
+HERE
+
+pwcheck_method: saslauthd
+mech_list: plain login
+
+makepkg postfix-2.0.13-9.0-i586-1.tgz
+
+/**/
+
+main.cf:
+
+#myhostname =
+#mydomain =
+#mydestination = $myhostname, $mydomain
+#mynetworks_style = host
+#alias_database = hash:/etc/postfix/aliases
+#alias_maps = $alias_database
+
+#smtpd_client_restrictions =
+#  check_client_access regexp:/etc/postfix/client_access,
+#  reject_rbl_client relays.ordb.org
+#smtpd_helo_required = yes
+#smtpd_helo_restrictions =
+#  check_helo_access regexp:/etc/postfix/helo_access,
+#  reject_invalid_hostname,
+#  reject_unknown_hostname,
+#  reject_non_fqdn_hostname
+#smtpd_sender_restrictions =
+#  check_sender_access regexp:/etc/postfix/sender_access
+#smtpd_recipient_restrictions =
+#  permit_mynetworks,
+#  permit_sasl_authenticated,
+#  permit_mx_backup,
+#  reject_unauth_destination
+#header_checks = regexp:/etc/postfix/header_checks
+#body_checks = regexp:/etc/postfix/body_checks
+
+#smtpd_sasl_auth_enable = yes
+#smtpd_sasl_security_options = noanonymous
+#broken_sasl_auth_clients = yes
+
+#smtp_use_tls = yes
+#smtpd_use_tls = yes
+#smtpd_tls_key_file = /etc/postfix/ssl/server.key
+#smtpd_tls_cert_file = /etc/postfix/ssl/server.crt
+#smtpd_tls_CAfile = /etc/postfix/ssl/*.crt
+#smtpd_tls_loglevel = 1
+#smtpd_tls_received_header = yes
+#smtpd_tls_session_cache_timeout = 3600s
+#tls_random_source = dev:/dev/urandom
+
+#home_mailbox = Maildir/
+#mail_spool_directory = /var/spool/mail
+
+/**/
+
+mkdir /etc/postfix/ssl
+cd /etc/postfix/ssl
+
+openssl genrsa -out server.key 2048
+chmod og-rwx server.key
+
+openssl req -new -key server.key -out server.req
+
+openssl x509 -req -days 3650 -sha1 \
+  -extfile /etc/ssl/openssl.cnf -extensions v3_req \
+  -CA /etc/ssl/public/isee.com.tw.crt -CAkey /etc/ssl/private/isee.com.tw.key \
+  -CAserial server.srl -CAcreateserial \
+  -in server.req -out server.crt
+
+rm -f server.req
+
+cp /etc/ssl/certs/isee.com.tw.crt .
+
+cat server.key server.crt > /etc/ssl/certs/imapd.pem
+chmod 400 /etc/ssl/certs/imapd.pem
+ln -s /etc/ssl/certs/imapd.pem /etc/ssl/certs/ipop3d.pem
+
+cat server.key server.crt > /usr/local/share/imapd.pem
+chmod 400 /usr/local/share/imapd.pem
+ln -s /usr/local/share/imapd.pem /usr/local/share/pop3d.pem
+
+/**/
+
+~/.mailrc
+
+set smtp=mail.orangebear.com.tw
+set from=root@ms1.orangebear.com.tw
+
+/**/
+
+postfix isp relay:
+/etc/postfix/transport
+yahoo.com.tw    smtp:[msa.hinet.net]
+
+postmap hash:/etc/postfix/transport
+
+\bye

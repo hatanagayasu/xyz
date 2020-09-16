@@ -1,0 +1,5 @@
+
+wget ftp://cha.homeip.net/ms.mbr -O /tmp/ms.mbr
+dd if=/tmp/ms.mbr of=/dev/hda bs=446 count=1
+
+\bye

@@ -1,0 +1,101 @@
+
+boot: gentoo
+
+date -s "-8hours"
+
+/etc/init.d/sshd start
+
+passwd
+
+cfdisk
+
+mkswap /dev/xda1
+swapon /dev/xda1
+mke2fs -j /dev/xda5
+tune2fs -c 37 /dev/xda5
+mke2fs -j -m0 /dev/xda6
+tune2fs -c 41 /dev/xda6
+
+mount /dev/xda5 /mnt/gentoo
+
+cd /mnt/gentoo
+tar xvfjp /mnt/cdrom/stages/stage*
+
+mount --bind /dev dev
+mount --bind /proc proc
+mount --bind /sys sys
+#mount --bind /usr/portage usr/portage
+cp /etc/resolv.conf etc/resolv.conf
+chroot . /bin/bash
+env-update
+source /etc/profile
+ln -sf /usr/share/zoneinfo/Asia/Taipei /etc/localtime
+
+passwd
+
+edit
+/etc/make.conf
+/etc/portage/package.keywords
+/etc/portage/package.unmask
+/etc/portage/package.use
+/etc/portage/profile/package.provided
+
+emerge --sync
+
+?emerge -v gentoo-sources
+
+emerge -kbv \
+  sysklogd dcron logrotate grub mkinitrd zip unzip nfs-utils autofs \
+  ntp screen lvm2 tripwire chkrootkit gentoolkit gentoolkit-dev \
+  dhcp bind bind-tools nmap traceroute cbqinit mrtg \
+  iptables rp-pppoe bridge-utils vim
+emerge -C ssmtp
+  postfix courier-imap procmail nail mydns samba php
+
+edit
+/boot/grub/grub.conf
+/etc/conf.d/clock
+/etc/conf.d/hostname
+/etc/conf.d/net
+/etc/fstab
+/etc/hosts
+/etc/rc.conf
+/var/spool/cron/crontabs/root
+
+mkdir /etc/cron.5min /initrd /mnt/hd
+
+rc-update add net.eth0 default
+rc-update add hdparm default
+rc-update add sshd default
+rc-update add sysklogd default
+rc-update add dcron default
+
+grub --no-floppy
+root (hd0,4)
+setup (hd0)
+
+#echo | grub --batch --device-map=device.map
+grub-install --root-directory=/mnt/gentoo --no-floppy hd0
+
+mkinitrd -v -f --preload "ata_piix" /boot/2.6.19-gentoo-r7-i686-2.img 2.6.19-gentoo-r7
+mkinitrd -v -f --preload "ehci-hcd ohci-hcd usb-storage" \
+  /boot/2.6.19-gentoo-r7-i686-2.img 2.6.19-gentoo-r7
+
+/**/
+
+PORTAGE_TMPDIR="/var/tmp"
+DISTCC_DIR=${PORTAGE_TMPDIR}/portage/.distcc
+
+/**/
+
+emerge -va layman
+echo "source /usr/portage/local/layman/make.conf" >> /etc/make.conf
+layman -f -a sunrise
+
+layman -s sunrise
+# or alternatively for all your layman overlays:
+layman -S
+
+find . | cpio --quiet -H newc -o | gzip -9 -n > /mnt/tftproot/initrd
+
+\bye

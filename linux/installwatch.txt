@@ -1,0 +1,11 @@
+mv Makefile Makefile.ORIGIN
+sed 's/gcc/& -march=i586 -mcpu=i586/' Makefile.ORIGIN > Makefile
+make
+make install PREFIX=/usr
+
+cp -a --parents /usr/bin/installwatch /usr/src/BUILD
+cp -a --parents /usr/lib/installwatch.so /usr/src/BUILD
+
+makepkg installwatch-0.6.3-9.0-i586-1.tgz
+
+\bye

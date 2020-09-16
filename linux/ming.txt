@@ -1,0 +1,12 @@
+mv Makefile Makefile.ORIGIN
+sed -e 's/#static/static/' \
+  -e 's/#install-static/install-static/' \
+  Makefile.ORIGIN > Makefile
+
+CFLAGS="-march=i586 -mcpu=i586" make
+
+installwatch -o t.log make install PREFIX=/usr/src/BUILD/usr
+
+makepkg ming-0.2a-9.0-i586-1.tgz
+
+\bye

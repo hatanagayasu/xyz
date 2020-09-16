@@ -1,0 +1,15 @@
+./configure
+__i586 do
+
+mv pppd/plugins/Makefile pppd/plugins/Makefile.ORIGIN
+sed 's/^SUBDIRS = rp-pppoe radius/SUBDIRS = rp-pppoe/' \
+  pppd/plugins/Makefile.ORIGIN > pppd/plugins/Makefile
+
+make
+
+installwatch -o t.log make install DESTDIR=/usr/src/BUILD
+
+__devel ppp-devel-2.4.2-9.0-i586-1.tgz
+makepkg ppp-2.4.2-9.0-i586-1.tgz
+
+\bye

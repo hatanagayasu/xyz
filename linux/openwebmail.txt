@@ -1,0 +1,14 @@
+mkdir -p /usr/src/BUILD/usr/local/apache2
+cd /usr/src/BUILD/usr/local/apache2
+tar xvfz /usr/src/tarball/mail/openwebmail-2.00.tgz
+mv data/openwebmail htdocs
+rmdir data
+
+mv cgi-bin/openwebmail/etc/openwebmail.conf \
+  cgi-bin/openwebmail/etc/openwebmail.conf.ORIGIN
+cat cgi-bin/openwebmail/etc/openwebmail.conf.ORIGIN | \
+  sed 's/^ow_cgidir.*/ow_cgidir		\/usr\/local\/apache2\/cgi-binex/' | \
+  sed 's/^ow_htmldir.*/ow_htmldir		\/usr\/local\/apache2\/htdocs/' > \
+  cgi-bin/openwebmail/etc/openwebmail.conf
+
+\bye

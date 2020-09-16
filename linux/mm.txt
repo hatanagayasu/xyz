@@ -1,0 +1,18 @@
+MM
+
+CFLAGS="-march=i586" ./configure
+
+make
+installwatch -o t.log make install
+
+__zip t.log | xargs zip -gy mm-1.2.1-i586-1.zip
+
+NET-SNMP
+
+CFLAGS="-march=i586" ./configure --enable-shared
+
+make
+installwatch -o t.log make install
+
+__zip t.log | xargs zip -gy net-snmp-5.0.6-i586-1.zip
+

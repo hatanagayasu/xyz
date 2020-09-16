@@ -1,0 +1,72 @@
+--- pam_mysql.c.ORIGIN	2003-02-26 14:12:26.000000000 +0800
++++ pam_mysql.c	2003-03-01 10:14:04.000000000 +0800
+@@ -28,9 +28,9 @@
+ /* AFAIK, only FreeBSD has MD5Data() defined in md5.h
+  * better MD5 support will appear in 0.5
+  */
+-#ifdef HAVE_MD5DATA
+-#include <md5.h>
+-#endif
++
++#include <openssl/md5.h>
++
+ 
+ #include <mysql/mysql.h>
+ 
+@@ -150,6 +150,23 @@
+ 
+ int sqlLog(MYSQL *auth_sql_server, const char *msg, const char *user);
+ 
++void md5data(char* md5, const char *password)
++{
++  unsigned char digest[MD5_DIGEST_LENGTH];
++  MD5_CTX ctx;
++  int i;
++      
++  MD5_Init(&ctx);
++  MD5_Update(&ctx, password, strlen(password));
++  MD5_Final(digest, &ctx);
++  
++  for(i = 0; i < 16; i++)
++  {
++    sprintf(md5, "%02x", digest[i]);
++    md5 += 2;
++  }
++}
++
+ /* breakArgs() breaks up a long string argument into its component chunks,
+    accounting for escape chars and quoted strings as PAM doesn't (yet).
+    It also looks for name-value pairs, so it probably still won't go away
+@@ -300,11 +317,11 @@
+ 				} else if ((!strcmp(myval, "2")) ||
+ 					(!strcasecmp(myval, "mysql"))) {
+ 						options.crypt = 2;
+-#ifdef HAVE_MD5DATA
++
+ 				} else if ((!strcmp(myval, "3")) ||
+ 					(!strcasecmp(myval, "MD5"))) {
+ 						options.crypt = 3;
+-#endif
++
+ 				} else {
+ 					options.crypt = 0;
+ 				}
+@@ -576,13 +593,14 @@
+ 		case 2: make_scrambled_password(encryptedPass, passwd);
+ 			break;
+ 
+-#ifdef HAVE_MD5DATA
++
+ 		/* MD5 hash (not MD5 crypt()) */
+-		case 3: strcpy(encryptedPass, MD5Data(passwd, strlen(passwd), md5buf));
++		case 3: /*strcpy(encryptedPass, MD5Data(passwd, strlen(passwd), md5buf));
+ 			if (md5buf != NULL)
+-				free(md5buf);
++				free(md5buf);*/
++			md5data(encryptedPass, passwd);
+ 			break;
+-#endif /* HAVE_MD5DATA */
++
+ 	}
+ 
+ 	if (!strcmp(row[0], encryptedPass))

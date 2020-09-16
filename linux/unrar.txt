@@ -1,0 +1,19 @@
+mv Makefile Makefile.ORIGIN
+sed 's/CFLAGS = /&-march=i586 /' Makefile.ORIGIN > Makefile
+
+make
+
+sudo mkdir -p /usr/src/BUILD/usr/local/bin
+sudo installwatch -o t.log make install BINDIR=/usr/src/BUILD/usr/local/bin
+
+/--/
+
+sudo installwatch -o t.log make install
+sudo __log t.log install
+
+/--/
+
+makepkg unrar-2.71-hata-i586-1.tgz
+makepkg unrar-3.1.1-hata-i386-1.tgz
+
+\bye

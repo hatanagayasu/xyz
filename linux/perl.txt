@@ -1,0 +1,38 @@
+perl Makefile.PL
+mv Makefile Makfile.ORIGIN
+sed 's/CCCDLFLAGS = /&-march=i586 -mcpu=i586 /' Makfile.ORIGIN > Makefile
+#sed 's/OPTIMIZE = /&-march=i586 -mcpu=i586 /' Makfile.ORIGIN > Makefile
+make
+
+installwatch -o t.log make install \
+  INSTALLPRIVLIB=/usr/src/BUILD/usr/lib/perl5/5.8.0 \
+  INSTALLSITELIB=/usr/src/BUILD/usr/lib/perl5/site_perl/5.8.0 \
+  INSTALLARCHLIB=/usr/src/BUILD/usr/lib/perl5/5.8.0/i386-linux \
+  INSTALLSITEARCH=/usr/src/BUILD/usr/lib/perl5/site_perl/5.8.0/i386-linux \
+  INSTALLSITEMAN1DIR=/usr/src/BUILD/usr/man/man1 \
+  INSTALLSITEMAN3DIR=/usr/src/BUILD/usr/man/man3 \
+  INSTALLBIN=/usr/src/BUILD/usr/bin \
+  INSTALLSITEBIN=/usr/src/BUILD/usr/bin \
+  INSTALLSCRIPT=/usr/src/BUILD/usr/bin
+  
+find /usr/src/BUILD -type f -perm +111 -exec strip {} \;
+chgrp bin /usr/src/BUILD/usr/bin
+
+__perl
+
+#PREFIX=/usr/src/BUILD/usr
+
+/--/
+
+makepkg perl-AppConfig-1.55-9.0-noarch-1.tgz
+makepkg perl-Chart-2.2-9.0-noarch-1.tgz
+makepkg perl-DBI-1.38-9.0-i586-1.tgz
+makepkg perl-DBD-mysql-2.9002-i586-1.tgz
+makepkg perl-DBD-Pg-1.22-9.0-i586-1.tgz
+makepkg perl-GD-2.07-9.0-i586-1.tgz
+makepkg perl-Net_SSLeay.pm-1.25-i586-1.tgz
+makepkg perl-Template-Toolkit-2.10-9.0-i586-1.tgz
+makepkg perl-TimeDate-1.16-9.0-noarch-1.tgz
+makepkg perl-XML-Parser-2.34-i586-1.tgz
+
+\bye

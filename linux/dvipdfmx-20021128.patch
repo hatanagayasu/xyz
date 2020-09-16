@@ -1,0 +1,11 @@
+--- src/subfont.c.ORIGIN	2003-02-12 17:43:01.000000000 +0800
++++ src/subfont.c	2003-02-12 17:53:19.000000000 +0800
+@@ -109,7 +109,7 @@
+   if (!miktex_find_app_input_file("ttf2pk", filename, full_filename = work_buffer))
+     full_filename = NULL;
+ #else
+-  kpse_reset_program_name("ttf2pk");
++  /*kpse_reset_program_name("ttf2pk");*/
+   full_filename = kpse_find_file(filename, kpse_program_text_format, 1);
+   kpse_reset_program_name("dvipdfm");
+ #endif
