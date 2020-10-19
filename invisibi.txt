@@ -8,6 +8,8 @@
 #sudo vim /home/$ACCOUNT/.ssh/authorized_keys
 #sudo chown $ACCOUNT:users /home/$ACCOUNT/.ssh -R
 #sudo chmod 700 /home/$ACCOUNT/.ssh
+#
+#ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no
 
 wget http://dev2.invisibi.com/account/account.sh
 sudo bash account.sh $ACCOUNT
